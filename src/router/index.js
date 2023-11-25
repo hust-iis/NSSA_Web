@@ -52,6 +52,16 @@ const routes = [
       { path: 'alert', component: () => import('../views/asset/EmailAlert') },
       { path: 'traffic', component: () => import('../views/asset/TrafficMonitor') }
     ]
+  },
+  {
+    path: '/crypto',
+    name: 'Crypto',
+    redirect: '/crypto/wiki',
+    component: () => import('../views/CryptoCenter'),
+    children: [
+      {path: 'app', component: () => import('../views/crypto/CryptoApp')},
+      {path: 'wiki', component: () => import('../views/crypto/CryptoWiki')}
+    ]
   }
 ]
 
