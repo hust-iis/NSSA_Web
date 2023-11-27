@@ -1,8 +1,7 @@
 <template>
   <div>
     <nav-bar class="nav">
-      <div class="sysName" slot="left">网络信息攻击模拟器</div>
-
+      <div class="sysName" slot="left">安全态势感知与分析系统</div>
       <div slot="right" class="userNav">
         <el-dropdown>
           <span class="el-icon-user">{{ userName }}</span>

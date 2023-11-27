@@ -3,44 +3,39 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from "../views/Login.vue";
 
-import Traffic from '../views/asset/TrafficMonitor'
-
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: "/manage",
+  //   name: "UserManage",
+  //   component: () => import('../views/UserManageCenter'),
+  //   children: [
+  //     { path: 'info', component: () => import('../views/user/UserInfo') },
+  //     { path: 'list', component: () => import('../views/user/UserList') },
+  //     { path: 'audit', component: () => import('../views/user/UserAudit') },
+  //   ]
+  // },
+  // {
+  //   path: '/topo/:id?',
+  //   name: 'topo',
+  //   component: () => import('../views/NetworkTopology'),
+  //   props: true // 将id作为props.id传入组件
+  // },
+  
+  // 登录页面
   {
     path: "/",
     name: "Login",
     component: Login,
   },
-  // {
-  //     path: "/",
-  //     name: "Traffic",
-  //     component: Traffic,
-  //   },
-
-  {
-    path: "/manage",
-    name: "UserManage",
-    component: () => import('../views/UserManageCenter'),
-    children: [
-      { path: 'info', component: () => import('../views/user/UserInfo') },
-      { path: 'list', component: () => import('../views/user/UserList') },
-      { path: 'audit', component: () => import('../views/user/UserAudit') },
-      
-    ]
-  },
+  // 主页
   {
     path: "/home",
     name: "Home",
     component: Home,
   },
-  {
-    path: '/topo/:id?',
-    name: 'topo',
-    component: () => import('../views/NetworkTopology'),
-    props: true // 将id作为props.id传入组件
-  },
+  // 资产管理+安全风险分析
   {
     path: '/asset',
     name: 'Asset',
@@ -53,6 +48,42 @@ const routes = [
       { path: 'traffic', component: () => import('../views/asset/TrafficMonitor') }
     ]
   },
+  // 异常攻击发现
+  {
+    path: '/abnormal_attack',
+    name: 'AbnormalAttack',
+    redirect: '/abnormal_attack/traffic',
+    component: () => import('../views/AbnormalAttack'),
+    children: [
+      {path: 'traffic', component: () => import('../views/attack/AbnormalTraffic')},
+      {path: 'host', component: () => import('../views/attack/AbnormalHost')},
+      {path: 'user', component: () => import('../views/attack/AbnormalUser')}
+    ]
+  },
+  // 违规行为监测
+  {
+    path: '/violation_monitor',
+    name: 'ViolationMonitor',
+    redirect: '/violation_monitor/whitelist',
+    component: () => import('../views/ViolationMonitor'),
+    children: [
+      {path: 'whitelist', component: () => import('../views/violation/ViolationWhitelist')},
+      {path: 'logs', component: () => import('../views/violation/ViolationLogs')}
+    ]
+  },
+  // 流量监测
+  {
+    path: "/traffic_monitor",
+    name: "TrafficMonitor",
+    component: () => import('../views/TrafficMonitor'),
+  },
+  // 应急响应
+  {
+    path: "/incident",
+    name: "IncidentResponse",
+    component: () => import('../views/IncidentResponse'),
+  },
+  // TODO: 密码应用+密码知识库
   {
     path: '/crypto',
     name: 'Crypto',
@@ -62,7 +93,7 @@ const routes = [
       {path: 'app', component: () => import('../views/crypto/CryptoApp')},
       {path: 'wiki', component: () => import('../views/crypto/CryptoWiki')}
     ]
-  }
+  },
 ]
 
 const router = new VueRouter({

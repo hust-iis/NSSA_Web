@@ -1,6 +1,6 @@
 <template>
   <div class="loginHome">
-    <p class="Header">网络信息攻击模拟器</p>
+    <p class="Header">安全态势感知与分析系统</p>
     <!-- 粒子特效 -->
     <div id="liziceshi">
       <vue-particles
@@ -104,17 +104,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLogin = true;
-          login(this.ruleForm).then((res) => {
-            if (res.data.code === 0) {
-              this.$message.success("登录成功");
-              //将token存入sessionStorage
-              localStorage.setItem("token", res.data.data.token);
-              localStorage.setItem("user_name", res.data.data.user_name);
-              this.$router.push("/home");
-            } else {
-              this.$message.error(res.data.msg);
-            }
-          });
+          localStorage.setItem("token", "res.data.data.token");
+          localStorage.setItem("user_name", "res.data.data.user_name");
+          this.$router.push("/home");
+          // login(this.ruleForm).then((res) => {
+          //   if (res.data.code === 0) {
+          //     this.$message.success("登录成功");
+          //     //将token存入sessionStorage
+          //     localStorage.setItem("token", res.data.data.token);
+          //     localStorage.setItem("user_name", res.data.data.user_name);
+          //     this.$router.push("/home");
+          //   } else {
+          //     this.$message.error(res.data.msg);
+          //   }
+          // });
         } else {
           console.log("error submit!!");
           return false;

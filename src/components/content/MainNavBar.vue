@@ -2,7 +2,7 @@
   <div class="nav-bar">
     <el-row>
       <el-col :span="5">
-        <div class="sysName" style="float: right">网络信息攻击模拟器</div>
+        <div class="sysName" style="float: right">安全态势感知与分析系统</div>
       </el-col>
       <el-col :span="15">&nbsp;</el-col>
       <el-col :span="4">

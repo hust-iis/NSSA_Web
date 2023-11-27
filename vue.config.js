@@ -31,7 +31,7 @@ module.exports = {
 
     chainWebpack(config) {
 		config.plugin('html').tap((args) => { //标题
-			args[0].title = '网络信息攻击模拟器';
+			args[0].title = '安全态势感知与分析系统';
 			return args;
 		})
 	},

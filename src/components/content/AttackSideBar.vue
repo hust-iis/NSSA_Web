@@ -6,11 +6,11 @@
           <el-submenu index="1">
             <template #title>
               <i class="el-icon-menu"></i>
-              <span>资产中心</span>
+              <span>异常攻击发现</span>
             </template>
-            <el-menu-item index="/asset/unit">车间管理</el-menu-item>
-            <el-menu-item index="/asset/scan">产线管理</el-menu-item>
-            <el-menu-item index="/asset/traffic">资产管理</el-menu-item>
+            <el-menu-item index="/abnormal_attack/traffic">异常流量感知</el-menu-item>
+            <el-menu-item index="/abnormal_attack/user">异常用户监测</el-menu-item>
+            <el-menu-item index="/abnormal_attack/host">异常主机监测</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>
@@ -21,11 +21,13 @@
 <script>
 import SideBar from "@/components/common/SideBar";
 export default {
-  name: "AssetSideBar",
-  components: {
+  name: "AttackSideBar",
+  components:{
     SideBar
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
