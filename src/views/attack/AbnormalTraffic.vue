@@ -51,8 +51,8 @@
   
 <script>
 import {
-  getAbnormalTraffics,
-  deleteAbnormalTraffic,
+  getTraffics,
+  delTraffic,
 } from "@/api/abnormal_attack";
 
 export default {
@@ -72,33 +72,30 @@ export default {
   methods: {
     // 查询态势感知事件
     getSituationEvents() {
-      getAbnormalTraffics(this.currentPage, this.pageSize, "", "", "")
+      getTraffics(this.currentPage, this.pageSize, "", "", "")
         .then((response) => {
           var tempList = []
-          if (response.data['data'].length > 0) {
-            response.data["data"].map((item) => {
-              // 将item解析并push到list中
-              tempList.push({
-                id: item.pk,
-                type: item['fields']["type"],
-                time: item['fields']["time"],
-                src_ip: item['fields']["src_ip"],
-                dst_ip: item['fields']["dst_ip"],
-                detail: item['fields']["detail"],
-              })
+          response.data["data"]['traffic'].map((item) => {
+            console.log(item);
+            // 将item解析并push到list中
+            tempList.push({
+              id: item["id"],
+              type: item["type"],
+              time: item["time"],
+              src_ip: item["src_ip"],
+              dst_ip: item["dst_ip"],
+              detail: item["detail"],
             })
-            this.tableData = tempList
-            this.tableTotal = response.data['total']
-          }
+          })
+          this.tableData = tempList
+          this.tableTotal = response.data['total']
         }).catch((response) => {
           this.$message.error(response.data.msg);
         }).finally()
     },
     // 删除单个态势感知事件
     deleteRow(index, row) {
-      var delete_ids = []
-      delete_ids.push(row.id)
-      deleteAbnormalTraffic(delete_ids.toString()).
+      delTraffic(row.id).
         then(response => {
           if (response.data['code'] !== 0) {
             throw response
@@ -114,13 +111,14 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    // FIXME:批量删除态势感知事件
     deleteSelection() {
       if (this.multipleSelection.length > 0) {
         var list = []
         this.multipleSelection.forEach(row => {
           list.push(row.id)
         });
-        deleteAbnormalTraffic(list.toString()).
+        delTraffic(list.toString()).
           then(response => {
             if (response.data['code'] !== 0) {
               throw response

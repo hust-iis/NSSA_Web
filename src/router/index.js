@@ -64,7 +64,7 @@ const routes = [
   {
     path: '/violation_monitor',
     name: 'ViolationMonitor',
-    redirect: '/violation_monitor/whitelist',
+    redirect: '/violation_monitor/logs',
     component: () => import('../views/ViolationMonitor'),
     children: [
       {path: 'whitelist', component: () => import('../views/violation/ViolationWhitelist')},
