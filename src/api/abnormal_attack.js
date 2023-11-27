@@ -9,7 +9,7 @@ export const AbnormalHostURL = "/api/abnormal_attack/host"
 
 // 异常流量
 // 批量查询
-export function getTraffics(page = 1, pageSize = 10, search = '') {
+export function getTraffics(page = 1, pageSize = 10, search = '', type, sort) {
     return axios.get(
         AbnormalTrafficsURL,
         {params: {page: page, pageSize: pageSize, content: search}}

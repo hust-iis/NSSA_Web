@@ -1,12 +1,26 @@
 <template>
   <div>
+    <el-input style="width: 450px" @keyup.enter.native="search" class="top-items" v-model="searchContent"
+      placeholder="筛选支持字段：发生时间,来源,目标,详细信息">
+      <el-button slot="append" icon="el-icon-search" @click="searchAbnormalTraffics"></el-button>
+    </el-input>
     <!-- 表格展示 -->
     <el-table :data="tableData" @selection-change="handleSelectionChange"
       style="width: 100%; font-size:15px; height: 100%" border v-loading="loading"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <!-- 基本信息 -->
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="type" label="事件类型">
+      <el-table-column prop="type" label="事件类型" :filters="[
+        { text: 'DDoS', value: 1 },
+        { text: 'Webshell', value: 2 },
+        { text: '僵尸网络', value: 3 },
+        { text: '木马', value: 4 },
+        { text: '蠕虫', value: 5 },
+        { text: '病毒', value: 6 },
+        { text: 'SQL注入', value: 7 },
+        { text: 'XML注入', value: 8 },
+        { text: '跨站脚本攻击', value: 9 },
+        { text: '端口扫描', value: 10 },]" :filter-method="filterHandler">
         <template slot-scope="scope">
           <span v-if="scope.row.type == 1">DDoS</span>
           <span v-if="scope.row.type == 2">Webshell</span>
@@ -58,6 +72,7 @@ export default {
   data() {
     return {
       loading: true,
+      searchContent: '',
       currentPage: 1,
       pageSize: 10,
       tableTotal: 0,
@@ -91,6 +106,28 @@ export default {
           this.$message.error(response.data.msg);
         }).finally()
     },
+    // 搜索
+    searchAbnormalTraffics() {
+      getTraffics(this.currentPage, this.pageSize, this.searchContent)
+        .then((response) => {
+          var tempList = []
+          response.data["data"]['traffic'].map((item) => {
+            // 将item解析并push到list中
+            tempList.push({
+              id: item["id"],
+              type: item["type"],
+              time: item["time"],
+              src_ip: item["src_ip"],
+              dst_ip: item["dst_ip"],
+              detail: item["detail"],
+            })
+          })
+          this.tableData = tempList
+          this.tableTotal = response.data['count']
+        }).catch((response) => {
+          this.$message.error(response.data.msg);
+        }).finally()
+    },
     // 删除单个异常流量事件
     deleteRow(index, row) {
       delTraffic(row.id).
@@ -104,7 +141,6 @@ export default {
           this.$message.error('error: ' + response.data.msg)
         })
     },
-
     // 批量删除异常流量事件
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -127,6 +163,11 @@ export default {
             this.$message.error('error: ' + response.data.msg)
           })
       }
+    },
+    // 按类型筛选
+    filterHandler(value, row, column) {
+      const property = column['property'];
+      return row[property] === value;
     },
     // 更改表格页面大小
     handleSizeChange: function (size) {
