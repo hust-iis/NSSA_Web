@@ -1,8 +1,9 @@
 <template>
   <div>
+    <!-- 搜索栏 -->
     <el-input style="width: 450px" @keyup.enter.native="search" class="top-items" v-model="searchContent"
       placeholder="筛选支持字段：发生时间,来源,目标,详细信息">
-      <el-button slot="append" icon="el-icon-search" @click="searchAbnormalTraffics"></el-button>
+      <el-button slot="append" icon="el-icon-search" @click="getAbnormalTraffics"></el-button>
     </el-input>
     <!-- 表格展示 -->
     <el-table :data="tableData" @selection-change="handleSelectionChange"
@@ -53,8 +54,14 @@
     </el-table>
     <div style="position: relative;">
       <!-- 底部分页器 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-        :page-sizes="[5, 10]" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="tableTotal">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableTotal">
       </el-pagination>
       <el-button style="position: absolute; top: 0; right: 0;" @click="deleteSelection">批量删除</el-button>
     </div>
@@ -86,28 +93,6 @@ export default {
   methods: {
     // 查询异常流量事件
     getAbnormalTraffics() {
-      getTraffics(this.currentPage, this.pageSize, "")
-        .then((response) => {
-          var tempList = []
-          response.data["data"]['traffic'].map((item) => {
-            // 将item解析并push到list中
-            tempList.push({
-              id: item["id"],
-              type: item["type"],
-              time: item["time"],
-              src_ip: item["src_ip"],
-              dst_ip: item["dst_ip"],
-              detail: item["detail"],
-            })
-          })
-          this.tableData = tempList
-          this.tableTotal = response.data['count']
-        }).catch((response) => {
-          this.$message.error(response.data.msg);
-        }).finally()
-    },
-    // 搜索
-    searchAbnormalTraffics() {
       getTraffics(this.currentPage, this.pageSize, this.searchContent)
         .then((response) => {
           var tempList = []

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- 搜索栏 -->
+    <el-input style="width: 450px" @keyup.enter.native="search" class="top-items" v-model="searchContent"
+      placeholder="筛选支持字段：用户姓名,发现时间,来源IP,主题名称">
+      <el-button slot="append" icon="el-icon-search" @click="getAbnormalUsers"></el-button>
+    </el-input>
     <!-- 表格展示 -->
     <el-table :data="tableData" @selection-change="handleSelectionChange"
       style="width: 100%; font-size:15px; height: 100%" border v-loading="loading"
@@ -7,7 +12,9 @@
       <!-- 基本信息 -->
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="user_name" label="用户姓名"></el-table-column>
-      <el-table-column prop="type" label="事件类型">
+      <el-table-column prop="type" label="事件类型" :filters="[
+        { text: '正常行为', value: 0 },
+        { text: '异常行为', value: 1 }]" :filter-method="filterHandler">
         <template slot-scope="scope">
           <span v-if="scope.row.type == 0">正常行为</span>
           <span v-if="scope.row.type == 1">异常行为</span>
@@ -31,8 +38,14 @@
     </el-table>
     <div style="position: relative;">
       <!-- 底部分页器 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-        :page-sizes="[5, 10]" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="tableTotal">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableTotal">
       </el-pagination>
       <el-button style="position: absolute; top: 0; right: 0;" @click="deleteSelection">批量删除</el-button>
     </div>
@@ -51,6 +64,7 @@ export default {
   data() {
     return {
       loading: true,
+      searchContent: '',
       currentPage: 1,
       pageSize: 10,
       tableTotal: 0,
@@ -64,7 +78,7 @@ export default {
   methods: {
     // 查询异常用户事件
     getAbnormalUsers() {
-      getUsers(this.currentPage, this.pageSize, "")
+      getUsers(this.currentPage, this.pageSize, this.searchContent)
         .then((response) => {
           var tempList = []
           response.data["data"]['user'].map((item) => {
@@ -120,6 +134,11 @@ export default {
             this.$message.error('error: ' + response.data.msg)
           })
       }
+    },
+    // 按类型筛选
+    filterHandler(value, row, column) {
+      const property = column['property'];
+      return row[property] === value;
     },
     // 更改表格页面大小
     handleSizeChange: function (size) {
