@@ -1,0 +1,191 @@
+<template>
+  <div>
+    <el-container>
+      <el-header height="60px">流量监测图</el-header>
+      
+        
+     <el-main style="overflow: hidden;">
+        <div id="myEcharts" style="width:1000px; height:500px"></div>
+        <!-- <el-row>
+            <span>总体威胁事件</span>
+            <el-button @click="getNewestInfo">获取最新数据</el-button>
+        </el-row>
+        <div id="threatChart" style="width:1000px; height:500px"></div> -->
+    
+    </el-main>
+      
+    </el-container>
+  </div>
+</template>
+
+<script>
+import * as echarts from "echarts";
+import {onMounted, onUnmounted} from "vue";
+export default {
+  name: "TrafficMonitor",
+  setup(){
+        let myEcharts = echarts;
+        // let chart=threatChart.init(document.getElementById("threatChart"))
+        onMounted(() => {
+            initChart();
+        });
+
+        onUnmounted(() => {
+            myEcharts.dispose;
+            threatChart.dispose;
+        });
+        function initChart(){
+            let chart=myEcharts.init(document.getElementById("myEcharts"))
+            var app = {};
+            var option;
+
+            let now = new Date();
+            let categories = [];
+            let len = 10;
+            while (len--) {
+                categories.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+                now = new Date(+now - 2000);
+            }
+            let categories2 = [];
+            len = 10;
+            while (len--) {
+                categories2.push(10 - len - 1);
+            }
+            let data = [];
+            len = 10;
+            while (len--) {
+                data.push(Math.round(Math.random() * 1000));
+            }
+            let data2 = [];
+            len = 0;
+            while (len < 10) {
+                data2.push(+(Math.random() * 10 + 5).toFixed(1));
+                len++;
+            }
+            option = {
+            title: {
+                text: 'Dynamic Data'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#283b56'
+                }
+                }
+            },
+            legend: {},
+            toolbox: {
+                show: true,
+                feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+                }
+            },
+            dataZoom: {
+                show: false,
+                start: 0,
+                end: 100
+            },
+            xAxis: [
+                {
+                type: 'category',
+                boundaryGap: true,
+                data: categories
+                },
+                {
+                type: 'category',
+                boundaryGap: true,
+                data: categories2
+                }
+            ],
+            yAxis: [
+                {
+                type: 'value',
+                scale: true,
+                name: 'Price',
+                max: 30,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+                },
+                {
+                type: 'value',
+                scale: true,
+                name: 'Order',
+                max: 1200,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+                }
+            ],
+            series: [
+                {
+                name: 'Dynamic Bar',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: data
+                },
+                {
+                name: 'Dynamic Line',
+                type: 'line',
+                data: data2
+                }
+            ]
+            };
+            app.count = 11;
+            setInterval(function () {
+                let axisData = new Date().toLocaleTimeString().replace(/^\D*/, '');
+                //这里是新加入的数据，在这里进行axios请求就好了
+                data.shift();
+                data.push(Math.round(Math.random() * 1000));
+                data2.shift();
+                data2.push(+(Math.random() * 10 + 5).toFixed(1));
+                categories.shift();
+                categories.push(axisData);
+                categories2.shift();
+                categories2.push(app.count++);
+                chart.setOption({
+                    xAxis: [
+                    {
+                        data: categories
+                    },
+                    {
+                        data: categories2
+                    }
+                    ],
+                    series: [
+                    {
+                        data: data
+                    },
+                    {
+                        data: data2
+                    }
+                    ]
+                });
+            }, 2100);
+
+            option && chart.setOption(option);
+
+
+        }
+        
+
+        return{
+            initChart
+        }
+
+    }
+}
+</script>
+    
+<style scoped>
+.el-header {
+  padding: 0;
+}
+
+.el-container {
+  overflow: hidden;
+}
+</style>
