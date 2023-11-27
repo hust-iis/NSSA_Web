@@ -9,8 +9,8 @@
               <span>资产中心</span>
             </template>
             <el-menu-item index="/asset/unit">车间管理</el-menu-item>
-            <el-menu-item index="/asset/scan">产线管理</el-menu-item>
-            <el-menu-item index="/asset/traffic">资产管理</el-menu-item>
+            <el-menu-item index="/asset/line">产线管理</el-menu-item>
+            <el-menu-item index="/asset/scan">资产管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>

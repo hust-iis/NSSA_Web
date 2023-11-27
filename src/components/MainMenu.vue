@@ -8,8 +8,8 @@
         <p class="title-text">资产中心</p>
       </div>
       <div class="group">
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">车间管理</main-menu-item>
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">产线管理</main-menu-item>
+        <main-menu-item to="/asset/unit" picture="item-asset-scan.png">车间管理</main-menu-item>
+        <main-menu-item to="/asset/line" picture="item-asset-scan.png">产线管理</main-menu-item>
         <main-menu-item to="/asset/scan" picture="item-asset-scan.png">资产管理</main-menu-item>
       </div>
       <!-- 异常攻击发现 -->
@@ -40,7 +40,7 @@
         <p class="title-text">流量检测</p>
       </div>
       <div class="group">
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">流量检测</main-menu-item>
+        <main-menu-item to="/traffic_monitor" picture="item-asset-scan.png">流量检测</main-menu-item>
       </div>
       <!-- 大数据态势感知 -->
       <div class="title">
@@ -50,7 +50,7 @@
       </div>
       <div class="group">
         <main-menu-item to="/asset/scan" picture="item-asset-scan.png">大数据态势分析</main-menu-item>
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">态势应急响应</main-menu-item>
+        <main-menu-item to="/incident" picture="item-asset-scan.png">态势应急响应</main-menu-item>
       </div>
     </div>
   </div>

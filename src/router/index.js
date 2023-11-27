@@ -42,10 +42,11 @@ const routes = [
     redirect: '/asset/scan',
     component: () => import('../views/AssetCenter'),
     children: [
-      { path: 'scan', component: () => import('../views/asset/AssetScan') },
       { path: 'unit', component: () => import('../views/asset/UnitManagement') },
-      { path: 'alert', component: () => import('../views/asset/EmailAlert') },
-      { path: 'traffic', component: () => import('../views/asset/TrafficMonitor') }
+      { path: 'line', component: () => import('../views/asset/ProductionLine') },
+      { path: 'scan', component: () => import('../views/asset/AssetScan') },
+      // { path: 'alert', component: () => import('../views/asset/EmailAlert') },
+      // { path: 'traffic', component: () => import('../views/asset/TrafficMonitor') }
     ]
   },
   // 异常攻击发现
@@ -75,7 +76,12 @@ const routes = [
   {
     path: "/traffic_monitor",
     name: "TrafficMonitor",
-    component: () => import('../views/TrafficMonitor'),
+    redirect: '/traffic_monitor/monitor',
+    component: () => import('../views/TrafficCenter'),
+    children: [
+      {path: 'monitor', component: () => import('../views/traffic/TrafficMonitor')},
+      {path: 'overall', component: () => import('../views/traffic/OverallThreat')},
+    ]
   },
   // 应急响应
   {

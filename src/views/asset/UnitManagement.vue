@@ -9,28 +9,28 @@
       </el-upload>
       <el-button type="primary" @click="handleDownload" style="margin-left: 10px">导出</el-button>
       <el-input style="width: 500px; margin-left: 15px" @keyup.enter.native="search"
-                v-model="searchContent" placeholder="筛选支持字段：单位名称、行业、区域、监管单位、主管单位">
+                v-model="searchContent" placeholder="筛选支持字段车间名称、行业、区域、监管车间、主管车间">
         <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
       </el-input>
     </div>
 
     <div slot="table">
-      <!-- 单位基础信息弹窗 -->
-      <el-dialog title="单位信息" :visible.sync="showUnitForm">
+      <!-- 车间基础信息弹窗 -->
+      <el-dialog title="车间信息" :visible.sync="showUnitForm">
         <unit-form :data="selectUnit" :type="formType" :read-only.sync="onlyShowUnit" @canceled="showUnitForm = false" @success="handleNewEdit"></unit-form>
       </el-dialog>
-      <!-- 单位基础信息弹窗 over -->
+      <!-- 车间基础信息弹窗 over -->
 
       <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
         <!--<el-table-column type="selection"></el-table-column>-->
-        <el-table-column prop="name" label="单位名称" width="200" fixed></el-table-column>
-        <el-table-column prop="shortened" label="单位简称"></el-table-column>
+        <el-table-column prop="name" label="车间名称" width="200" fixed></el-table-column>
+        <el-table-column prop="shortened" label="车间简称"></el-table-column>
         <el-table-column prop="area" label="区域"></el-table-column>
         <el-table-column prop="industry" label="行业"></el-table-column>
         <el-table-column prop="web_number" label="网站数量"></el-table-column>
         <el-table-column prop="ip_number" label="IP数量"></el-table-column>
-        <el-table-column prop="regulator" label="监管单位"></el-table-column>
-        <el-table-column prop="competent" label="主管单位"></el-table-column>
+        <el-table-column prop="regulator" label="监管车间"></el-table-column>
+        <el-table-column prop="competent" label="主管车间"></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button-group>
@@ -78,9 +78,9 @@ export default {
   data() {
     return {
       loading: false,
-      selectUnit: {}, // 所选定的原始数据（单位）
-      showUnitForm: false, // 是否展示编辑单位信息弹窗
-      onlyShowUnit: true, // 编辑单位信息弹窗是否为只读（sync）
+      selectUnit: {}, // 所选定的原始数据"车间）
+      showUnitForm: false, // 是否展示编"车间信息弹窗
+      onlyShowUnit: true, // 编"车间信息弹窗是否为只读（sync）
       currentPage: 1,
       pagesize: 10,
       tableTotal: 0,
@@ -139,14 +139,14 @@ export default {
         this.$message.error('error: ' + response.data.msg)
       })
     },
-    handleAdd() { // 添加单位
-      this.formType = "addUnit"; // 标识添加单位
+    handleAdd() { // 添"车间
+      this.formType = "addUnit"; // 标识添"车间
       this.selectUnit = {};
       this.showUnitForm = true;
       this.onlyShowUnit = false;
     },
     handleEdit(row) { // 处理"编辑"按钮动作
-      this.formType = "editUnit"; // 标识添加单位
+      this.formType = "editUnit"; // 标识添"车间
       this.selectUnit = row;
       this.onlyShowUnit = false;
       this.showUnitForm = true;
@@ -156,7 +156,7 @@ export default {
       this.showUnitForm = false;
     },
     handleDetail(row) { // 处理"详情"按钮动作
-      this.formType = "detailUnit"; // 标识添加单位
+      this.formType = "detailUnit"; // 标识添"车间
       this.selectUnit = row;
       this.onlyShowUnit = true; // 设为只读
       this.showUnitForm = true;
