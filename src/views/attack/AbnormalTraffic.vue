@@ -1,5 +1,4 @@
 <template>
-  <!-- 态势感知事件表格 -->
   <div>
     <!-- 表格展示 -->
     <el-table :data="tableData" @selection-change="handleSelectionChange"
@@ -70,13 +69,12 @@ export default {
     this.flushHost()
   },
   methods: {
-    // 查询态势感知事件
-    getSituationEvents() {
-      getTraffics(this.currentPage, this.pageSize, "", "", "")
+    // 查询异常流量事件
+    getAbnormalTraffics() {
+      getTraffics(this.currentPage, this.pageSize, "")
         .then((response) => {
           var tempList = []
           response.data["data"]['traffic'].map((item) => {
-            console.log(item);
             // 将item解析并push到list中
             tempList.push({
               id: item["id"],
@@ -88,12 +86,12 @@ export default {
             })
           })
           this.tableData = tempList
-          this.tableTotal = response.data['total']
+          this.tableTotal = response.data['count']
         }).catch((response) => {
           this.$message.error(response.data.msg);
         }).finally()
     },
-    // 删除单个态势感知事件
+    // 删除单个异常流量事件
     deleteRow(index, row) {
       delTraffic(row.id).
         then(response => {
@@ -107,18 +105,18 @@ export default {
         })
     },
 
-    // 批量删除态势感知事件
+    // 批量删除异常流量事件
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    // FIXME:批量删除态势感知事件
+    // FIXME:批量删除异常流量事件
     deleteSelection() {
       if (this.multipleSelection.length > 0) {
         var list = []
         this.multipleSelection.forEach(row => {
           list.push(row.id)
         });
-        delTraffic(list.toString()).
+        delTraffics(list.toString()).
           then(response => {
             if (response.data['code'] !== 0) {
               throw response
@@ -143,7 +141,7 @@ export default {
     // 刷新Host
     flushHost() {
       this.loading = true
-      this.getSituationEvents()
+      this.getAbnormalTraffics()
       this.loading = false
     },
   },
