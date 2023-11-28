@@ -93,7 +93,7 @@ export default {
             })
           })
           this.tableData = tempList
-          this.tableTotal = response.data['count']
+          this.tableTotal = response.data["data"]['count']
         }).catch((response) => {
           this.$message.error(response.data.msg);
         }).finally()
