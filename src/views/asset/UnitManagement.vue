@@ -23,14 +23,10 @@
 
       <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
         <!--<el-table-column type="selection"></el-table-column>-->
+        <el-table-column prop="id" label="ID"></el-table-column>
         <el-table-column prop="name" label="车间名称" width="200" fixed></el-table-column>
         <el-table-column prop="shortened" label="车间简称"></el-table-column>
-        <el-table-column prop="area" label="区域"></el-table-column>
-        <el-table-column prop="industry" label="行业"></el-table-column>
-        <el-table-column prop="web_number" label="网站数量"></el-table-column>
-        <el-table-column prop="ip_number" label="IP数量"></el-table-column>
-        <el-table-column prop="regulator" label="监管车间"></el-table-column>
-        <el-table-column prop="competent" label="主管车间"></el-table-column>
+        <el-table-column prop="production_number" label="产线号码"></el-table-column>
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button-group>
@@ -102,7 +98,7 @@ export default {
         if (response.data['code'] !== 0) {
           throw response
         }
-        this.tableData = response.data['data'].map(v => v['fields']);
+        this.tableData = response.data['data'].map(v => v['list']);
         this.tableTotal = response.data['total']
         this.loading = false
       }).catch(response => {

@@ -5,27 +5,22 @@
     <el-form label-position="right" label-width="6vw" class="addUnitForm" :model="unit" :disabled="readOnly">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="单位名称">
-            <el-input type="text" v-model="unit.name" placeholder="请输入单位名称"
+          <el-form-item label="车间名称">
+            <el-input type="text" v-model="unit.name" placeholder="请输入车间名称"
                       :disabled="type !== 'addUnit' || readOnly"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="单位简称" label-width="9vw">
-            <el-input type="text" v-model="unit.shortened" placeholder="请输入单位简称"></el-input>
+          <el-form-item label="车间简称" label-width="9vw">
+            <el-input type="text" v-model="unit.shortened" placeholder="请输入车间简称"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="行业">
-            <el-input type="text" v-model="unit.industry" placeholder="请输入所在行业"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="区域" label-width="9vw">
-            <el-input type="text" v-model="unit.area" placeholder="请输入所在区域"></el-input>
+          <el-form-item label="产线号码">
+            <el-input type="text" v-model="unit.production_number" placeholder="请输入所在产线号码"></el-input>
           </el-form-item>
         </el-col>
       </el-row>

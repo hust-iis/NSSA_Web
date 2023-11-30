@@ -75,7 +75,7 @@
           if (response.data['code'] !== 0) {
             throw response
           }
-          this.tableData = response.data['data'].map(v => v['fields']);
+          this.tableData = response.data['data'].map(v => v['list']);
           this.tableTotal = response.data['total']
           this.loading = false
         }).catch(response => {
