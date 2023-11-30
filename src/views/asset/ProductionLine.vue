@@ -25,12 +25,14 @@
           <!--<el-table-column type="selection"></el-table-column>-->
           <el-table-column prop="name" label="产线名称" width="200" fixed></el-table-column>
           <el-table-column prop="shortened" label="产线简称"></el-table-column>
-          <el-table-column prop="area" label="区域"></el-table-column>
+          <el-table-column prop="asset_num" label="产线简称"></el-table-column>
+          <el-table-column prop="workshop_n" label="产线简称"></el-table-column>
+          <!-- <el-table-column prop="area" label="区域"></el-table-column>
           <el-table-column prop="industry" label="行业"></el-table-column>
           <el-table-column prop="web_number" label="网站数量"></el-table-column>
           <el-table-column prop="ip_number" label="IP数量"></el-table-column>
           <el-table-column prop="regulator" label="监管产线"></el-table-column>
-          <el-table-column prop="competent" label="主管产线"></el-table-column>
+          <el-table-column prop="competent" label="主管产线"></el-table-column> -->
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button-group>

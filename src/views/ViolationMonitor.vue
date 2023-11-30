@@ -15,7 +15,7 @@
 import InnerNavBar from "@/components/content/InnerNavBar";
 import ViolationSideBar from "@/components/content/ViolationSideBar";
 export default {
-  name: "AssetCenter",
+  name: "ViolationMonitor",
   components: {
     InnerNavBar,
     ViolationSideBar

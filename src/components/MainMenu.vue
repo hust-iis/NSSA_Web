@@ -30,8 +30,8 @@
         <p class="title-text">违规行为检测</p>
       </div>
       <div class="group">
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">智能学习名单</main-menu-item>
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">违规行为记录</main-menu-item>
+        <main-menu-item to="/violation_monitor/whitelist" picture="item-asset-scan.png">智能学习名单</main-menu-item>
+        <main-menu-item to="/violation_monitor/logs" picture="item-asset-scan.png">违规行为记录</main-menu-item>
       </div>
       <!-- 流量监测 -->
       <div class="title">

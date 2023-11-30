@@ -19,6 +19,7 @@
                     v-model="searchContent" placeholder="筛选支持字段：IP地址、主机名、单位名称、操作系统">
             <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
           </el-input>
+          <el-button type="primary" @click="addAsset()" style="float: right; margin-right: 20px;">添加资产</el-button>
         </el-row>
       </div>
     </el-header>
@@ -32,13 +33,20 @@
               <el-button type="text" @click="showServiceForm(scope.$index)">{{ scope.row.ip }}</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="hostname" label="主机名"></el-table-column>
-          <el-table-column prop="type" label="设备类型"></el-table-column>
-          <el-table-column prop="mac" label="MAC地址"></el-table-column>
+          <el-table-column prop="asset_name" label="主机名"></el-table-column>
+          <el-table-column prop="position" label="位置"></el-table-column>
+          <el-table-column prop="device_sn" label="设备序列号"></el-table-column>
+          <el-table-column prop="device_vendor" label="供应商"></el-table-column>
+          <el-table-column prop="device_type" label="设备类型"></el-table-column>
+          <el-table-column prop="device_working_hours" label="工作时间"></el-table-column>
+          <el-table-column prop="cpu_used" label="cpu使用率"></el-table-column>
+          <el-table-column prop="remain_mem" label="剩余内存"></el-table-column>
+          <el-table-column prop="remain_harddisk" label="剩余硬盘大小主机名"></el-table-column>
+          <el-table-column prop="network_speed" label="网速"></el-table-column>
           <el-table-column prop="os" label="操作系统"></el-table-column>
-          <el-table-column prop="vendor" label="供应商"></el-table-column>
+          <el-table-column prop="mac" label="MAC地址"></el-table-column>
           <el-table-column prop="update_time" label="更新时间"></el-table-column>
-          <el-table-column prop="department_name" label="所属单位"></el-table-column>
+          <el-table-column prop="productionline_name" label="产线名称"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button-group>
@@ -77,7 +85,7 @@
           </el-form-item>
           <el-form-item label="扫描最大线程数" >
             <el-slider
-                v-model="ScanTaskform.maxThreadNum" :min="1"
+                v-model="ScanTaskform.maxThreadNum" :min="1" :max="5"
                 show-input style="margin-left: 15px;">
             </el-slider>
           </el-form-item>
@@ -103,33 +111,56 @@
         <el-form :model="assetFormEdit"  :label-width="formLabelWidth"
                  style="margin:0 30px 0 60px; width: 500px;" :disabled="assetReadFlag">
           <el-form-item label="IP地址" >
-            <span>{{ assetFormEdit.ip }}</span>
+            <el-input v-model="assetFormEdit.ip" v-show="assetAdding"></el-input>
+            <span v-show="!assetAdding">{{assetFormEdit.ip}}</span>
           </el-form-item>
           <el-form-item label="主机名" >
-            <el-input v-model="assetFormEdit.hostname"></el-input>
+            <el-input v-model="assetFormEdit.name"></el-input>
           </el-form-item>
-          <el-form-item label="设备类型" >
-            <el-input v-model="assetFormEdit.type"></el-input>
+          <el-form-item label="位置" >
+            <el-input v-model="assetFormEdit.position"></el-input>
           </el-form-item>
-          <el-form-item label="MAC地址" >
-            <el-input v-model="assetFormEdit.mac"></el-input>
-          </el-form-item>
-          <el-form-item label="操作系统" >
-            <el-input v-model="assetFormEdit.os"></el-input>
+          <el-form-item label="sn" >
+            <el-input v-model="assetFormEdit.sn"></el-input>
           </el-form-item>
           <el-form-item label="供应商" >
             <el-input v-model="assetFormEdit.vendor"></el-input>
           </el-form-item>
-          <el-form-item label="所属单位" >
+          <el-form-item label="设备类型" >
+            <el-input v-model="assetFormEdit.type"></el-input>
+          </el-form-item>
+          <el-form-item label="工作时常" >
+            <el-input v-model="assetFormEdit.working_hours"></el-input>
+          </el-form-item>
+          <el-form-item label="CPU使用率" >
+            <el-input v-model="assetFormEdit.cpu_used"></el-input>
+          </el-form-item>
+          <el-form-item label="剩余内存" >
+            <el-input v-model="assetFormEdit.remain_mem"></el-input>
+          </el-form-item>
+          <el-form-item label="网速" >
+            <el-input v-model="assetFormEdit.network_speed"></el-input>
+          </el-form-item>
+          <el-form-item label="操作系统" >
+            <el-input v-model="assetFormEdit.os"></el-input>
+          </el-form-item>
+          <el-form-item label="MAC地址" >
+            <el-input v-model="assetFormEdit.mac"></el-input>
+          </el-form-item>
+          <el-form-item label="产线id" >
+            <el-input v-model="assetFormEdit.productionline_id"></el-input>
+          </el-form-item>
+          <!-- <el-form-item label="所属单位" >
             <el-select v-model="assetFormEdit.department_name">
               <el-option v-for="(unit) in unitList" :key="unit.name"
                 :label="unit.name" :value="unit.name"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
         <div slot="footer" class="dialog-footer" v-show="footVisible">
           <el-button @click="assetFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="handleEdit('assetFormEdit')">保存修改</el-button>
+          <el-button type="primary" @click="handleEdit('assetFormEdit')"  v-show="!assetAdding">保存修改</el-button>
+          <el-button type="primary" @click="handleAddAsset('assetFormEdit')"  v-show="assetAdding">确认添加</el-button>
         </div>
       </el-dialog>
       <!-- 编辑弹窗 over -->
@@ -165,12 +196,12 @@ import axios from 'axios'
 import AssetLayout from "@/components/common/AssetLayout";
 import {
   changeSingleHost,
-  changeSingleHostService,
   deleteSingleHost,
   importHostFile,
   downloadHostFile,
   getScanHost,
-  startScanHost
+  startScanHost,
+  addSingleAsset,
 } from "@/api/scan";
 import { getUnit } from "@/api/unit";
 import { saveAs } from 'file-saver';
@@ -183,7 +214,8 @@ export default {
   components: {
     HostServicesForm,
     AssetLayout,
-    TopoGenByNetForm
+    TopoGenByNetForm,
+    AddServiceForm
   },
   data() {
     return {
@@ -201,6 +233,7 @@ export default {
       topoGenVisible: false, 
       assetFormVisible: false,
       riskFormVisible:false,
+      assetAdding:false,
       ScanTaskform: {
         netSeg: '',
         portRange: '',
@@ -329,6 +362,20 @@ export default {
       //       vendor:this.assetFormEdit.vendor,
       //     })
     },
+    //////////////////////////////////////////////这里是新加的，添加资产的按钮
+    handleAddAsset(forName) { // Host 编辑
+      this.loading = true
+      this.assetFormEdit.update_time=new Date()
+      addSingleAsset(this.assetFormEdit).then(response => {
+        this.$message.success('保存成功')
+        this.flushHost()
+      }).catch(err => {
+        this.$message.error('保存失败: ' + err.data.msg)
+        this.loading = false
+      })
+      this.assetFormVisible = false
+    },
+
     // UI逻辑相关
     search(content) { // 搜索
       this.currentPage = 1
@@ -363,6 +410,11 @@ export default {
       this.assetFormEdit = Object.assign({}, row)
       this.assetFormEdit.index = index
       this.footVisible = true
+    },
+    addAsset(){
+      this.assetFormVisible = true
+      this.assetReadFlag = false
+      this.assetAdding=true
     },
     AssetInfo(index, row) {
       this.assetFormVisible = true

@@ -1,7 +1,8 @@
 import {axios} from "@/api/basic";
 
-export const LineInfoURL = "/cmdb/Line"
-export const LineFileURL = "/cmdb/LineFile"
+export const LineInfoURL = "/asset-management/productionline"
+
+// export const LineFileURL = "/cmdb/LineFile"
 // 查询所有产线
 export function getLine(page = 1, pageSize = 10, search = '') {
     return axios.get(LineInfoURL, {params: {page: page, pageSize: pageSize, content: search}})

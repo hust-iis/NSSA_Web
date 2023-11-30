@@ -108,6 +108,12 @@ import InnerNavBar from "@/components/content/InnerNavBar";
 import IncidentSideBar from "@/components/content/IncidentSideBar";
 import axios from "axios";
 import Notification from "@/components/form/Notification";
+import {
+  uploadVulThreat,
+  uploadSettings,
+  getNewAlert
+
+} from "@/api/email";
 export default {
   name: "IncidentResponse",
   components: {
@@ -140,6 +146,8 @@ export default {
     saveEmailAddr() {
       this.email.isEdit = false;
       console.log("此时应该给后端发送收件地址更改了！");
+      //api:
+      //uploadVulThreat(this.email.addrress)
     },
 
     getInfo() {
@@ -147,11 +155,15 @@ export default {
       axios.get("http://localhost:8080/yingji/xiangying").then((res) => {
         this.threats = res.data.alertInfo;
       });
+      //api:
+      //getNewAlert(this.threats)
     },
     dangerLevel(num) {
       return num >= 5 ? "error" : "warning";
     },
     saveSettings() {
+      //api:
+      // uploadSettings(this.settingsForm)
       const notification = {
         title: "Success",
         description: "邮件相关设置保存成功！",
