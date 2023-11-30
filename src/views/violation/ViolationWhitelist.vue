@@ -14,6 +14,7 @@
       <div slot="table">  
         <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <!--<el-table-column type="selection"></el-table-column>-->
+          <el-table-column prop="id" label="ID" width="200" fixed></el-table-column>
           <el-table-column prop="name" label="用户名" width="200" fixed></el-table-column>
           <el-table-column prop="url" label="URL"></el-table-column>
           <el-table-column label="操作" width="200">
@@ -97,7 +98,7 @@
         this.flushWhiteList()  //点击第几页
       },
       deleteRow(index, row) { // 处理删除的动作
-        deleteUsr(row.name).then( response => {
+        deleteUsr(row.id).then( response => {
           if (response.data['code'] !== 0) {
             throw response
           }

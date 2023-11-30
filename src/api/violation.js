@@ -13,18 +13,18 @@ export function changeMode(status){
 }
 
 //查找白名单
-export function searchUsr(page=1,pageSize=5,search=''){
+export function searchUsr(page=1,number=5,name=''){
     return axios.get(
         SearchUsrURL,
-        {params: {page: page, pageSize: pageSize, content: search}}
+        {params: {page: page, number: number, name: name}}
     )
 }
 
 //查找log
-export function searchLogs(page=1,pageSize=5,search=''){
+export function searchLogs(page=1,number=5,name=''){
     return axios.get(
         SearchLogURL,
-        {params: {page: page, pageSize: pageSize, content: search}}
+        {params: {page: page, number: number, name: name}}
     )
 }
 
