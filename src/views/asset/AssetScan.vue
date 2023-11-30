@@ -215,7 +215,7 @@ export default {
     HostServicesForm,
     AssetLayout,
     TopoGenByNetForm,
-    AddServiceForm
+    
   },
   data() {
     return {

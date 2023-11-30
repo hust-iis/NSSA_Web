@@ -21,7 +21,7 @@ export function searchUsr(page=1,pageSize=5,search=''){
 }
 
 //查找log
-export function searchLog(page=1,pageSize=5,search=''){
+export function searchLogs(page=1,pageSize=5,search=''){
     return axios.get(
         SearchLogURL,
         {params: {page: page, pageSize: pageSize, content: search}}
