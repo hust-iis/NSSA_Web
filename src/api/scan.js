@@ -42,7 +42,8 @@ export function addSingleAsset(data) {
 }
 
 //新增服务
-export function addService(data) {
+export function addSingleService(ip,data) {
+    data.ip=ip
     data = {
         data: data,
         type: 'add'

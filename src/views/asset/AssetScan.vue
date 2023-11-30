@@ -100,7 +100,7 @@
       </el-dialog>
       <!--Service展示\编辑弹窗-->
       <el-dialog :title="serviceTableIP + '的服务列表'" :visible.sync="serviceTableVisible" width="80vw">
-        <host-services-form :ip="serviceTableIP" ref="serviceTable"></host-services-form>
+        <host-services-form :ip="serviceTableIP" :asset_id="serviceTableID" ref="serviceTable"></host-services-form>
       </el-dialog>
       <!-- 生成拓扑图弹窗 -->
       <el-dialog title="拓扑图生成" :visible.sync="topoGenVisible" width="50vw">
@@ -215,16 +215,35 @@ export default {
     HostServicesForm,
     AssetLayout,
     TopoGenByNetForm,
-    
+
   },
   data() {
     return {
-      tableData: [],
-      tableTotal: 0,
+      // tableData: [],
+      // tableTotal: 0,
+      tableData: [{
+        "ip": "192.168.99.99",
+        "name": "TEST",
+        "position": "",
+        "device_sn": "",
+        "device_vendor": "TEST",
+        "device_type": "",
+        "device_working_hours": "",
+        "cpu_used": 0,
+        "remain_mem": 0,
+        "remain_harddisk": 0,
+        "network_speed": 0,
+        "os": "Arris TG862 WAP",
+        "mac": "AA:BB:CC:DD:EE:FF",
+        "update_time": "Sun Nov 27 00:14:27 2023",
+        "productionline_id": 0
+      }],
+      tableTotal: 1,
       currentPage: 1,
       pagesize: 10,
       unitList: [],
       serviceTableIP: "",
+      serviceTableID: "",
       loading: false,
       dialogFormVisible: false,
       serviceTableVisible: false,
@@ -403,6 +422,7 @@ export default {
       if(this.serviceTableIP === this.tableData[index].ip) // IP相同时，强制重载
         this.$refs.serviceTable.initialData()
       this.serviceTableIP = this.tableData[index].ip
+      this.serviceTableID=index
     },
     showAssetForm(index, row) {
       this.assetFormVisible = true

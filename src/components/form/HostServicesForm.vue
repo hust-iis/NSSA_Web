@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="display: flex; justify-content: flex-end;">
+      <el-button @click="addSingleService()" icon="el-icon-plus" style="margin-right:10px" type="primary" plain>添加服务</el-button> 
       <el-upload action="" :show-file-list="false" accept=".xls,.xlsx"
         :auto-upload="false" :on-change="beforeFileUpload">
         <el-button class="el-icon-upload2" type="primary">导入</el-button>
@@ -11,7 +12,12 @@
 
     <el-table :data="tableData" style="width: 100%; font-size:15px" border v-loading="loading"
               :header-cell-style="{background: '#eef1f6', color:'#606266'}">
-      <el-table-column label="端口" prop="port"></el-table-column>
+      <el-table-column label="端口">
+        <template slot-scope="scope">
+          <el-input v-if="addflag" v-model="scope.row.port"></el-input>
+          <span v-else>{{scope.row.port}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="状态">
         <template slot-scope="scope">
           <el-input v-if="scope.row.edit" v-model="scope.row.state"></el-input>
@@ -73,8 +79,10 @@ import {
   importHostServiceFile,
   downloadHostServiceFile,
   getHostServices,
+  addSingleService
 } from "@/api/scan";
 import { saveAs } from 'file-saver';
+import { number } from 'echarts';
 
 export default {
   name: "HostServicesForm",
@@ -82,6 +90,11 @@ export default {
     ip: {
       type: String,
       default: ""
+    },
+    asset_id:{
+      type:Number,
+      default:""
+
     }
   },
   data() {
@@ -89,15 +102,16 @@ export default {
       loading: false,
       title: "",
       tableData: [{
-        // ip:  "1.1.1.1",
-        // port:"portT",
-        // state:"stateT",
-        // name:"nameT",
-        // product:"productT",
-        // version:"versionT",
-        // cpe:"cpeT",
-        // edit: false,
+        ip:  "192.168.99.99",
+        port:"portT",
+        state:"stateT",
+        name:"nameT",
+        product:"productT",
+        version:"versionT",
+        cpe:"cpeT",
+        edit: false,
       }],
+      addflag:false,
     }
   },
   mounted() {
@@ -156,15 +170,45 @@ export default {
     handleEdit(row) { // Service 编辑提交
       if(this.tableData[row].edit) {
         this.loading = true
-        changeSingleHostService(this.ip, this.tableData[row]).then(response => {
-          this.$message.success('修改成功')
-          this.initialData()
-        }).catch(err => {
-          this.$message.error('修改失败: ' + err.data.msg)
-          this.loading = false
-        })
+        if(!this.addflag){
+          changeSingleHostService(this.ip, this.tableData[row]).then(response => {
+            this.$message.success('修改成功')
+            this.initialData()
+          }).catch(err => {
+            this.$message.error('修改失败: ' + err.data.msg)
+            this.loading = false
+          })
+        }else{
+          this.tableData[row].update_time=new Date();
+          this.tableData[row].asset_id=this.asset_id
+          addSingleService(this.ip, this.tableData[row]).then(response => {
+            this.$message.success('添加成功')
+            this.initialData()
+          }).catch(err => {
+            this.$message.error('添加失败: ' + err.data.msg)
+            this.loading = false
+          })
+          this.addflag=false
+        }
+        
       }
       this.tableData[row].edit = !this.tableData[row].edit
+    },
+    //要写的内容
+    addSingleService(){
+      const newrow={
+        port:"",
+        state:"",
+        name:"",
+        product:"",
+        version:"",
+        cpe:"",
+        extrainfo:"",
+        update_time:"",
+        edit: true,
+      }
+      this.tableData.push(newrow)
+      this.addflag=true
     },
     deleteRow(index, row) {
       deleteSingleService(row.ip, row.port).then( response => {
