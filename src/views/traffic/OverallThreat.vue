@@ -47,11 +47,15 @@
               dateList.unshift('异常攻击类型')
               // console.log(dateList)
               let overall_data=[]
+              overall_data.push(dateList)
               getOverallThreat().then(response => {
                 if (response.data['code'] !== 0) {
                     throw response
                 }
-                overall_data=response.data['data'].all_daily_counts
+                for (item of response.data['data'].all_daily_counts){
+                    overall_data.push(item)
+                }
+                
             }).catch(response => {
                 this.$message.error('error: ' + response.data.msg)
                 this.loading = false
@@ -66,20 +70,7 @@
                   },
                   //在这里进行axios数据请求就行
                   dataset: {
-                  source: [
-                      dateList,
-                      overall_data[0],
-                      overall_data[1],
-                      overall_data[2],
-                      overall_data[3],
-                      overall_data[4],
-                      overall_data[5],
-                      overall_data[6],
-                    //   ['木马蠕虫', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1,34],
-                    //   ['异常流量', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7,45],
-                    //   ['异常用户行为', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5,56],
-                    //   ['DoS攻击', 25.2, 37.1, 41.2, 18, 33.9, 49.1,11]
-                  ]
+                  source: overall_data
                   },
                   xAxis: { type: 'category' },
                   yAxis: { gridIndex: 0 },

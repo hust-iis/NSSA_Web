@@ -23,7 +23,7 @@
   
         <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <!--<el-table-column type="selection"></el-table-column>-->
-          <el-table-column prop="id" label="序号" width="200" fixed></el-table-column>
+          <el-table-column prop="id" label="ID" width="200" fixed></el-table-column>
           <el-table-column prop="name" label="产线名称"></el-table-column>
           <el-table-column prop="shortened" label="产线简称"></el-table-column>
           <el-table-column prop="asset_num" label="产线简称"></el-table-column>
@@ -100,8 +100,8 @@
           if (response.data['code'] !== 0) {
             throw response
           }
-          this.tableData = response.data['data'].map(v => v['list']);
-          this.tableTotal = response.data['total']
+          this.tableData = response.data['data'].list;
+          this.tableTotal = response.data['data'].total
           this.loading = false
         }).catch(response => {
           this.$message.error('error: ' + response.data.msg)
@@ -173,7 +173,7 @@
         this.flushLine()  //点击第几页
       },
       deleteRow(index, row) { // 处理删除的动作
-        deleteSingleLine(row.name).then( response => {
+        deleteSingleLine(row.id).then( response => {
           if (response.data['code'] !== 0) {
             throw response
           }

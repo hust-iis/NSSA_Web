@@ -2,6 +2,7 @@ import {axios} from "@/api/basic";
 
 export const LineInfoURL = "/asset-management/productionline"
 
+// 文件导入导出api还没有给出
 // export const LineFileURL = "/cmdb/LineFile"
 // 查询所有产线
 export function getLine(page = 1, pageSize = 10, search = '') {
@@ -25,16 +26,17 @@ export function downloadLineFile() {
     })
 }
 // 编辑某行产线
-export function changeSingleLine(data) {
+export function changeSingleLine(id,data) {
+    data.alternum=id
     data = {
         data: data,
         type: 'edit'
     }
-    return axios.post(LineInfoURL, data)
+    return axios.put(LineInfoURL,data)
 }
 // 删除某行产线
-export function deleteSingleLine(name) {
-    return axios.delete(LineInfoURL, {params: {name: name}})
+export function deleteSingleLine(deletenum) {
+    return axios.delete(LineInfoURL, {params: {deletenum: deletenum}})
 }
 // 添加一个产线
 export function addLine(data) {

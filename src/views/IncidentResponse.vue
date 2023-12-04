@@ -156,6 +156,11 @@ export default {
       console.log("此时应该给后端发送收件地址更改了！");
       //api:
       //uploadVulThreat(this.email.addrress)
+      const notification = {
+        title: "Success",
+        description: "更改邮件地址成功！",
+      };
+      this.$refs.notification.success(notification); // success调用
     },
     // 获取威胁事件
     getInfo() {

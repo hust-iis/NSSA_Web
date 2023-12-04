@@ -28,6 +28,7 @@
         <el-table :data="tableData" style="width: 100%; font-size:15px; height: 100%" border
                   v-loading="loading" :header-cell-style="{background: '#eef1f6', color:'#606266'}">
           <!--<el-table-column type="selection"></el-table-column>-->
+          <el-table-column prop="id" label="ID"></el-table-column>
           <el-table-column prop="ip" label="IP地址">
             <template slot-scope="scope">
               <el-button type="text" @click="showServiceForm(scope.$index)">{{ scope.row.ip }}</el-button>
@@ -110,6 +111,9 @@
       <el-dialog title="资产详情" :visible.sync="assetFormVisible" >
         <el-form :model="assetFormEdit"  :label-width="formLabelWidth"
                  style="margin:0 30px 0 60px; width: 500px;" :disabled="assetReadFlag">
+          <el-form-item label="ID" >
+            <span>{{assetFormEdit.id}}</span>
+          </el-form-item>
           <el-form-item label="IP地址" >
             <el-input v-model="assetFormEdit.ip" v-show="assetAdding"></el-input>
             <span v-show="!assetAdding">{{assetFormEdit.ip}}</span>
@@ -223,6 +227,7 @@ export default {
       // tableData: [],
       // tableTotal: 0,
       tableData: [{
+        "id":1,
         "ip": "192.168.99.99",
         "name": "TEST",
         "position": "",
@@ -240,6 +245,7 @@ export default {
         "productionline_id": 0
       },
       {
+        "id":2,
         "ip": "192.168.99.100",
         "name": "TEST",
         "position": "",
@@ -328,8 +334,8 @@ export default {
         if (response.data['code'] !== 0) {
           throw response
         }
-        this.tableData = response.data['data'].map(v => v['fields']);
-        this.tableTotal = response.data['total']
+        this.tableData = response.data['data'].list;
+        this.tableTotal = response.data['data'].total
         this.loading = false
       }).catch(response => {
         this.$message.error('error: ' + response.data.msg)
@@ -341,7 +347,7 @@ export default {
         if (response.data['code'] !== 0) {
           throw response
         }
-        this.unitList = response.data['data'].map(v => v['fields']);
+        this.unitList = response.data['data'].list;
         console.log(this.unitList)
       }).catch(response => { })
     },
@@ -383,7 +389,7 @@ export default {
     },
     handleEdit(forName) { // Host 编辑
       this.loading = true
-      changeSingleHost(this.assetFormEdit).then(response => {
+      changeSingleHost(this.assetFormEdit.id,this.assetFormEdit).then(response => {
         this.$message.success('修改成功')
         this.flushHost()
       }).catch(err => {
@@ -467,7 +473,7 @@ export default {
       this.footVisible = false
     },
     deleteRow(index, row) {
-      deleteSingleHost(row.ip).then( response => {
+      deleteSingleHost(row.id).then( response => {
         if (response.data['code'] !== 0) {
           throw response
         }

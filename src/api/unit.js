@@ -26,16 +26,18 @@ export function downloadUnitFile() {
     })
 }
 // 编辑某行车间
-export function changeSingleUnit(data) {
+export function changeSingleUnit(alternum,data) {
+    
+    data.alternum=alternum
     data = {
         data: data,
         type: 'edit'
     }
-    return axios.post(UnitInfoURL, data)
+    return axios.put(UnitInfoURL, data)
 }
 // 删除某行车间
-export function deleteSingleUnit(name) {
-    return axios.delete(UnitInfoURL, {params: {name: name}})
+export function deleteSingleUnit(deletenum) {
+    return axios.delete(UnitInfoURL, {params: {deletenun: deletenum}})
 }
 // 添加一个车间
 export function addUnit(data) {

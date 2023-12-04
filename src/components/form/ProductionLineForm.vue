@@ -308,7 +308,7 @@
         } else if(this.readOnly) {
           this.$emit('update:readOnly', false)
         } else {
-          changeSingleLine(this.line).then(response => {
+          changeSingleLine(this.line.id,this.line).then(response => {
             this.$message.success("修改成功");
             this.$emit('success')
           }).catch(response => {

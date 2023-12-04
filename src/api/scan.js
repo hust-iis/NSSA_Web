@@ -58,29 +58,30 @@ export function addSingleService(ip,data) {
 //     return axios.get(ScanHostURL, {params: {page: page, pageSize: pageSize, content: search}})
 // }
 
-export function changeSingleHost(data) {
+export function changeSingleHost(num,data) {
+    data.alternum=num
     data = {
         data: data,
         type: 'edit'
     }
-    return axios.post(AssetInfoURL, data)
+    return axios.put(AssetInfoURL, data)
 }
 
-export function deleteSingleHost(ip) {
-    return axios.delete(AssetInfoURL, {params: {ip: ip}})
+export function deleteSingleHost(num) {
+    return axios.delete(AssetInfoURL, {params: {deletenum: num}})
 }
 
-export function getHostServices(ip) {
-    return axios.get(HostServiceURL, {params: {ip: ip}})
+export function getHostServices(page=1,pageSize=99,id) {
+    return axios.get(HostServiceURL, {params: {page: page, pageSize: pageSize,assetid: id}})
 }
 
-export function changeSingleHostService(ip, data) {
-    data.ip = ip
+export function changeSingleHostService(id, data) {
+    data.alternum = id
     return axios.post(HostServiceURL, data)
 }
 
-export function deleteSingleService(ip, port) {
-    return axios.delete(HostServiceURL, {params: {ip: ip, port: port}})
+export function deleteSingleService(num) {
+    return axios.delete(HostServiceURL, {params: {deletenum:num}})
 }
 
 export function importHostFile(file) {

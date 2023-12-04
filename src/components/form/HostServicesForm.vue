@@ -14,6 +14,11 @@
               :header-cell-style="{background: '#eef1f6', color:'#606266'}">
       <el-table-column label="端口">
         <template slot-scope="scope">
+          <span>{{scope.row.id}}</span>
+        </template>
+      </el-table-column>
+              <el-table-column label="端口">
+        <template slot-scope="scope">
           <el-input v-if="addflag && scope.row.edit" v-model="scope.row.port"></el-input>
           <span v-else>{{scope.row.port}}</span>
         </template>
@@ -125,7 +130,7 @@ export default {
   methods: {
     initialData() { // 获取所有Service
       this.loading = true
-      getHostServices(this.ip).then((response) => { // 成功获取，更新表项
+      getHostServices(id=this.id).then((response) => { // 成功获取，更新表项
         this.tableData = response.data['data'].map(v => {
           v = Object.assign({}, v['fields'])
           v.edit = false // important
@@ -171,7 +176,7 @@ export default {
       if(this.tableData[row].edit) {
         this.loading = true
         if(!this.addflag){
-          changeSingleHostService(this.ip, this.tableData[row]).then(response => {
+          changeSingleHostService(this.id, this.tableData[row]).then(response => {
             this.$message.success('修改成功')
             this.initialData()
           }).catch(err => {
@@ -211,7 +216,7 @@ export default {
       this.addflag=true
     },
     deleteRow(index, row) {
-      deleteSingleService(row.ip, row.port).then( response => {
+      deleteSingleService(row.id).then( response => {
         if (response.data['code'] !== 0) {
           throw response
         }

@@ -303,7 +303,7 @@ export default {
       } else if(this.readOnly) {
         this.$emit('update:readOnly', false)
       } else {
-        changeSingleUnit(this.unit).then(response => {
+        changeSingleUnit(this.unit.id,this.unit).then(response => {
           this.$message.success("修改成功");
           this.$emit('success')
         }).catch(response => {
