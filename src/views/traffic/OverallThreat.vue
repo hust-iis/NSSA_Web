@@ -18,6 +18,7 @@
   
   <script>
   import * as echarts from "echarts";
+  import { getOverallThreat } from "@/api/traffic_monitor";
   import {onMounted, onUnmounted} from "vue";
   export default {
     name: "OverallThreat",
@@ -45,6 +46,16 @@
               }
               dateList.unshift('异常攻击类型')
               // console.log(dateList)
+              let overall_data=[]
+              getOverallThreat().then(response => {
+                if (response.data['code'] !== 0) {
+                    throw response
+                }
+                overall_data=response.data['data'].all_daily_counts
+            }).catch(response => {
+                this.$message.error('error: ' + response.data.msg)
+                this.loading = false
+            })
               
               //新加部分结束
               option = {
@@ -57,10 +68,17 @@
                   dataset: {
                   source: [
                       dateList,
-                      ['木马蠕虫', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1,34],
-                      ['异常流量', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7,45],
-                      ['异常用户行为', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5,56],
-                      ['DoS攻击', 25.2, 37.1, 41.2, 18, 33.9, 49.1,11]
+                      overall_data[0],
+                      overall_data[1],
+                      overall_data[2],
+                      overall_data[3],
+                      overall_data[4],
+                      overall_data[5],
+                      overall_data[6],
+                    //   ['木马蠕虫', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1,34],
+                    //   ['异常流量', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7,45],
+                    //   ['异常用户行为', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5,56],
+                    //   ['DoS攻击', 25.2, 37.1, 41.2, 18, 33.9, 49.1,11]
                   ]
                   },
                   xAxis: { type: 'category' },
@@ -94,6 +112,7 @@
                   {
                       type: 'pie',
                       id: 'pie',
+                      seriesLayoutBy: 'row',
                       radius: '30%',
                       center: ['50%', '25%'],
                       emphasis: {

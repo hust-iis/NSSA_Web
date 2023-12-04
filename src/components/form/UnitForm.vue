@@ -49,7 +49,7 @@
         </el-col>
       </el-row> -->
 
-      <el-row :gutter="20">
+      <!-- <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="主管单位">
             <el-input type="text" v-model="unit.competent" placeholder="请输入主管单位"></el-input>
@@ -60,7 +60,7 @@
             <el-input type="text" v-model="unit.regulator" placeholder="请输入监管单位"></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
 
       <!-- <el-form-item label="区域" :required="true">
         <el-row>
@@ -134,7 +134,7 @@
         </el-col>
       </el-row> -->
 
-      <el-row :gutter="20">
+      <!-- <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="网站数量">
             <el-input
@@ -150,7 +150,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-    </el-form>
+    </el-form> -->
 
     <!-- 联系人信息 -->
     <!-- <div style="font-weight: bold; margin-bottom: 10px">
@@ -258,6 +258,7 @@
       <el-button round @click="$emit('canceled')">取消</el-button>
       <el-button type="primary" round @click="submit">{{ this.type === "addUnit"? '添加' : (!readOnly? '提交' : '编辑') }}</el-button>
     </div>
+    </el-form>
   </div>
 </template>
 

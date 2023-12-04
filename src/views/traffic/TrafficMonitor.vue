@@ -21,6 +21,7 @@
 <script>
 import * as echarts from "echarts";
 import {onMounted, onUnmounted} from "vue";
+import { getFlow } from "@/api/traffic_monitor";
 export default {
   name: "TrafficMonitor",
   setup(){
@@ -51,11 +52,26 @@ export default {
             while (len--) {
                 categories2.push(10 - len - 1);
             }
+            //这里写入请求数据
             let data = [];
-            len = 10;
-            while (len--) {
-                data.push(Math.round(Math.random() * 1000));
-            }
+            getFlow().then(response => {
+                if (response.data['code'] !== 0) {
+                    throw response
+                }
+                for (item of response.data['data'].total_traffic){
+                    data.push(item.traffic)
+                }
+            }).catch(response => {
+                this.$message.error('error: ' + response.data.msg)
+                this.loading = false
+            })
+            
+            //原来的部分
+            // len = 10;
+            // while (len--) {
+            //     data.push(Math.round(Math.random() * 1000));
+            // }
+            //
             let data2 = [];
             len = 0;
             while (len < 10) {
@@ -139,7 +155,16 @@ export default {
                 let axisData = new Date().toLocaleTimeString().replace(/^\D*/, '');
                 //这里是新加入的数据，在这里进行axios请求就好了
                 data.shift();
-                data.push(Math.round(Math.random() * 1000));
+                getFlow().then(response => {
+                    if (response.data['code'] !== 0) {
+                        throw response
+                    }
+                    data.push(response.data['data'].total_traffic[9].traffic)
+                }).catch(response => {
+                    this.$message.error('error: ' + response.data.msg)
+                    this.loading = false
+                })
+                // data.push(Math.round(Math.random() * 1000));
                 data2.shift();
                 data2.push(+(Math.random() * 10 + 5).toFixed(1));
                 categories.shift();

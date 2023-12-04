@@ -14,7 +14,7 @@
               :header-cell-style="{background: '#eef1f6', color:'#606266'}">
       <el-table-column label="端口">
         <template slot-scope="scope">
-          <el-input v-if="addflag" v-model="scope.row.port"></el-input>
+          <el-input v-if="addflag && scope.row.edit" v-model="scope.row.port"></el-input>
           <span v-else>{{scope.row.port}}</span>
         </template>
       </el-table-column>

@@ -18,6 +18,9 @@ export const HostServiceURL = "/asset-management/assetservice"
 //用于资产增删改查
 export const AssetInfoURL="/asset-management/asset"
 
+//获取风险值api
+export const AnalysisURL="/risk/analysis"
+
 export function startScanHost(data) {
     data = {
         data: data,
@@ -117,6 +120,8 @@ export function downloadHostServiceFile(ip) {
     })
 }
 
-// export function getVulThreat(ip){
-//     //获取脆弱值、风险值等相关数据
-// }
+export function getVulThreat(ip,assetValue=1000){
+    //获取脆弱值、风险值等相关数据
+    return axios.post(AnalysisURL, {params:{assetIP:ip, assetValue:assetValue}})
+
+}

@@ -9,7 +9,7 @@
       </el-upload>
       <el-button type="primary" @click="handleDownload" style="margin-left: 10px">导出</el-button>
       <el-input style="width: 500px; margin-left: 15px" @keyup.enter.native="search"
-                v-model="searchContent" placeholder="筛选支持字段车间名称、行业、区域、监管车间、主管车间">
+                v-model="searchContent" placeholder="筛选支持字段车间名称、简称、产线号码">
         <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
       </el-input>
     </div>
@@ -22,9 +22,8 @@
       <!-- 车间基础信息弹窗 over -->
 
       <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
-        <!--<el-table-column type="selection"></el-table-column>-->
-        <el-table-column prop="id" label="ID"></el-table-column>
-        <el-table-column prop="name" label="车间名称" width="200" fixed></el-table-column>
+        <el-table-column prop="id" label="ID" width="200" fixed></el-table-column>
+        <el-table-column prop="name" label="车间名称"></el-table-column>
         <el-table-column prop="shortened" label="车间简称"></el-table-column>
         <el-table-column prop="production_number" label="产线号码"></el-table-column>
         <el-table-column label="操作" width="200">
@@ -171,7 +170,7 @@ export default {
       this.flushUnit()  //点击第几页
     },
     deleteRow(index, row) { // 处理删除的动作
-      deleteSingleUnit(row.name).then( response => {
+      deleteSingleUnit(row.id).then( response => {
         if (response.data['code'] !== 0) {
           throw response
         }

@@ -2,30 +2,30 @@
     <div>
       <!-- <div style="border-top: 2px solid #EBEEF5; width: 100%; margin-top: -25px"></div>
       <div style="font-weight: bold; margin:10px 0">单位基础信息</div> -->
-      <el-form label-position="right" label-width="6vw" class="addUnitForm" :model="unit" :disabled="readOnly">
+      <el-form label-position="right" label-width="6vw" class="addProductionLineForm" :model="line" :disabled="readOnly">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="单位名称">
-              <el-input type="text" v-model="unit.name" placeholder="请输入单位名称"
-                        :disabled="type !== 'addUnit' || readOnly"></el-input>
+            <el-form-item label="产线名称">
+              <el-input type="text" v-model="line.name" placeholder="请输入产线名称"
+                        :disabled="type !== 'addLine' || readOnly"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位简称" label-width="9vw">
-              <el-input type="text" v-model="unit.shortened" placeholder="请输入单位简称"></el-input>
+            <el-form-item label="产线简称" label-width="9vw">
+              <el-input type="text" v-model="line.shortened" placeholder="请输入产线简称"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
   
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="行业">
-              <el-input type="text" v-model="unit.industry" placeholder="请输入所在行业"></el-input>
+            <el-form-item label="产线id">
+              <el-input type="text" v-model="line.workshop_id" placeholder="请输入产线id"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="区域" label-width="9vw">
-              <el-input type="text" v-model="unit.area" placeholder="请输入所在区域"></el-input>
+            <el-form-item label="资产数量" label-width="9vw">
+              <el-input type="text" v-model="line.asset_number" placeholder="请输入资产数量"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -54,7 +54,7 @@
           </el-col>
         </el-row> -->
   
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="主管单位">
               <el-input type="text" v-model="unit.competent" placeholder="请输入主管单位"></el-input>
@@ -65,7 +65,7 @@
               <el-input type="text" v-model="unit.regulator" placeholder="请输入监管单位"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
   
         <!-- <el-form-item label="区域" :required="true">
           <el-row>
@@ -139,7 +139,7 @@
           </el-col>
         </el-row> -->
   
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="网站数量">
               <el-input
@@ -155,7 +155,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </el-form>
+      </el-form> -->
   
       <!-- 联系人信息 -->
       <!-- <div style="font-weight: bold; margin-bottom: 10px">
@@ -261,18 +261,19 @@
       </div> -->
       <div style="text-align:right;">
         <el-button round @click="$emit('canceled')">取消</el-button>
-        <el-button type="primary" round @click="submit">{{ this.type === "addUnit"? '添加' : (!readOnly? '提交' : '编辑') }}</el-button>
+        <el-button type="primary" round @click="submit">{{ this.type === "addProductionLine"? '添加' : (!readOnly? '提交' : '编辑') }}</el-button>
       </div>
+      </el-form>
     </div>
   </template>
   
   <script>
   import {
-    changeSingleUnit,
-    addUnit
-  } from "@/api/unit";
+    changeSingleLine,
+    addLine
+  } from "@/api/line";
   export default {
-    name: "UnitForm",
+    name: "ProductionLineForm",
     props: {
       readOnly: { // 是否只读
         type: Boolean,
@@ -288,17 +289,17 @@
       }
     },
     mounted() {
-      this.unit = JSON.parse(JSON.stringify(this.data))
+      this.line = JSON.parse(JSON.stringify(this.data))
     },
     watch: {
       data(val, old) { // 监听原始数据变化
-        this.unit = JSON.parse(JSON.stringify(val))
+        this.line = JSON.parse(JSON.stringify(val))
       }
     },
     methods: {
       submit(){
-        if (this.type === "addUnit") {
-          addUnit(this.unit).then(response => {
+        if (this.type === "addLine") {
+          addLine(this.line).then(response => {
             this.$message.success("添加成功");
             this.$emit('success')
           }).catch(response => {
@@ -307,7 +308,7 @@
         } else if(this.readOnly) {
           this.$emit('update:readOnly', false)
         } else {
-          changeSingleUnit(this.unit).then(response => {
+          changeSingleLine(this.line).then(response => {
             this.$message.success("修改成功");
             this.$emit('success')
           }).catch(response => {
@@ -318,7 +319,7 @@
     },
     data: ()=>{
       return {
-        unit: {},
+        line: {},
       }
     }
   }

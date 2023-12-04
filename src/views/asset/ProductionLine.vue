@@ -9,7 +9,7 @@
         </el-upload>
         <el-button type="primary" @click="handleDownload" style="margin-left: 10px">导出</el-button>
         <el-input style="width: 500px; margin-left: 15px" @keyup.enter.native="search"
-                  v-model="searchContent" placeholder="筛选支持字段：产线名称、行业、区域、监管产线、主管产线">
+                  v-model="searchContent" placeholder="筛选支持字段：产线名称、简称、id">
           <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
         </el-input>
       </div>
@@ -23,16 +23,12 @@
   
         <el-table :data="tableData" v-loading="loading" style="font-size: 15px" border :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
           <!--<el-table-column type="selection"></el-table-column>-->
-          <el-table-column prop="name" label="产线名称" width="200" fixed></el-table-column>
+          <el-table-column prop="id" label="序号" width="200" fixed></el-table-column>
+          <el-table-column prop="name" label="产线名称"></el-table-column>
           <el-table-column prop="shortened" label="产线简称"></el-table-column>
           <el-table-column prop="asset_num" label="产线简称"></el-table-column>
-          <el-table-column prop="workshop_n" label="产线简称"></el-table-column>
-          <!-- <el-table-column prop="area" label="区域"></el-table-column>
-          <el-table-column prop="industry" label="行业"></el-table-column>
-          <el-table-column prop="web_number" label="网站数量"></el-table-column>
-          <el-table-column prop="ip_number" label="IP数量"></el-table-column>
-          <el-table-column prop="regulator" label="监管产线"></el-table-column>
-          <el-table-column prop="competent" label="主管产线"></el-table-column> -->
+          <el-table-column prop="workshop_n" label="产线id"></el-table-column>
+          <el-table-column prop="asset_number" label="资产数量"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button-group>
@@ -104,7 +100,7 @@
           if (response.data['code'] !== 0) {
             throw response
           }
-          this.tableData = response.data['data'].map(v => v['fields']);
+          this.tableData = response.data['data'].map(v => v['list']);
           this.tableTotal = response.data['total']
           this.loading = false
         }).catch(response => {

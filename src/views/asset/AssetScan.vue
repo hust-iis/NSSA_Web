@@ -202,6 +202,7 @@ import {
   getScanHost,
   startScanHost,
   addSingleAsset,
+  getVulThreat
 } from "@/api/scan";
 import { getUnit } from "@/api/unit";
 import { saveAs } from 'file-saver';
@@ -237,7 +238,25 @@ export default {
         "mac": "AA:BB:CC:DD:EE:FF",
         "update_time": "Sun Nov 27 00:14:27 2023",
         "productionline_id": 0
-      }],
+      },
+      {
+        "ip": "192.168.99.100",
+        "name": "TEST",
+        "position": "",
+        "device_sn": "",
+        "device_vendor": "TEST",
+        "device_type": "",
+        "device_working_hours": "",
+        "cpu_used": 0,
+        "remain_mem": 0,
+        "remain_harddisk": 0,
+        "network_speed": 0,
+        "os": "Arris TG862 WAP",
+        "mac": "AA:BB:CC:DD:EE:FF",
+        "update_time": "Sun Nov 27 00:14:27 2023",
+        "productionline_id": 0
+      }
+    ],
       tableTotal: 1,
       currentPage: 1,
       pagesize: 10,
@@ -253,6 +272,7 @@ export default {
       assetFormVisible: false,
       riskFormVisible:false,
       assetAdding:false,
+      calR_ip:"",
       ScanTaskform: {
         netSeg: '',
         portRange: '',
@@ -382,7 +402,7 @@ export default {
       //     })
     },
     //////////////////////////////////////////////这里是新加的，添加资产的按钮
-    handleAddAsset(forName) { // Host 编辑
+    handleAddAsset(forName) { // Host 添加
       this.loading = true
       this.assetFormEdit.update_time=new Date()
       addSingleAsset(this.assetFormEdit).then(response => {
@@ -393,6 +413,7 @@ export default {
         this.loading = false
       })
       this.assetFormVisible = false
+      this.assetAdding=false
     },
 
     // UI逻辑相关
@@ -425,6 +446,7 @@ export default {
       this.serviceTableID=index
     },
     showAssetForm(index, row) {
+      this.assetAdding=false
       this.assetFormVisible = true
       this.assetReadFlag = false
       this.assetFormEdit = Object.assign({}, row)
@@ -434,6 +456,7 @@ export default {
     addAsset(){
       this.assetFormVisible = true
       this.assetReadFlag = false
+      this.assetFormEdit = Object.assign({}, {})
       this.assetAdding=true
     },
     AssetInfo(index, row) {
@@ -455,16 +478,25 @@ export default {
       })
     },
     // 以下是我添加的
-    showVt(){
+    showVt(index,row){
       this.riskFormVisible = true
-      axios.get('http://localhost:8080/weixie/cuiruo').then((res)=>{
-        this.riskForm.threatValue=res.data.riskInfo.threat
-        this.riskForm.vulnerabilitylValue=res.data.riskInfo.vul
+      getVulThreat(row.ip, this.assetValue).then(response=>{
+        if(response.data['code']!==0){
+          throw response
+        }
+        this.calR_ip=row.ip
+        this.riskForm.threatValue=res.data['data'].total_threat_value
+        this.riskForm.vulnerabilitylValue=res.data['data'].Va
+        this.riskForm.riskValue=res.data['data'].R
       })
     },
     calRiskValue(){
-      console.log('调用计算方法')
-      this.riskForm.riskValue=this.riskForm.vulnerabilitylValue*this.riskForm.threatValue*this.riskForm.assetValue
+      getVulThreat(this.calR_ip, this.assetValue).then(response=>{
+        if(response.data['code']!==0){
+          throw response
+        }
+        this.riskForm.riskValue=res.data['data'].R
+      })
       
     }
     //我添加的部分结束
