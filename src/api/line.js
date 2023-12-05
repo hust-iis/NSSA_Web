@@ -27,16 +27,11 @@ export function downloadLineFile() {
 }
 // 编辑某行产线
 export function changeSingleLine(id,data) {
-    data.alternum=id
-    data = {
-        data: data,
-        type: 'edit'
-    }
-    return axios.put(LineInfoURL,data)
+    return axios.put(LineInfoURL+`/?alternum=${alternum}`,data)
 }
 // 删除某行产线
 export function deleteSingleLine(deletenum) {
-    return axios.delete(LineInfoURL, {params: {deletenum: deletenum}})
+    return axios.delete(LineInfoURL+`/?deletenum=${deletenum}`)
 }
 // 添加一个产线
 export function addLine(data) {

@@ -59,16 +59,11 @@ export function addSingleService(ip,data) {
 // }
 
 export function changeSingleHost(num,data) {
-    data.alternum=num
-    data = {
-        data: data,
-        type: 'edit'
-    }
-    return axios.put(AssetInfoURL, data)
+    return axios.put(AssetInfoURL+`/?alternum=${num}`, data)
 }
 
 export function deleteSingleHost(num) {
-    return axios.delete(AssetInfoURL, {params: {deletenum: num}})
+    return axios.delete(AssetInfoURL+`/?deletenum=${num}`)
 }
 
 export function getHostServices(page=1,pageSize=99,id) {
@@ -76,12 +71,11 @@ export function getHostServices(page=1,pageSize=99,id) {
 }
 
 export function changeSingleHostService(id, data) {
-    data.alternum = id
-    return axios.post(HostServiceURL, data)
+    return axios.post(HostServiceURL+`/?alternum=${num}`, data)
 }
 
 export function deleteSingleService(num) {
-    return axios.delete(HostServiceURL, {params: {deletenum:num}})
+    return axios.delete(HostServiceURL+`/?deletenum=${num}`)
 }
 
 export function importHostFile(file) {

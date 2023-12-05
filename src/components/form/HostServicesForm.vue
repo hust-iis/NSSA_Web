@@ -12,7 +12,7 @@
 
     <el-table :data="tableData" style="width: 100%; font-size:15px" border v-loading="loading"
               :header-cell-style="{background: '#eef1f6', color:'#606266'}">
-      <el-table-column label="端口">
+      <el-table-column label="ID">
         <template slot-scope="scope">
           <span>{{scope.row.id}}</span>
         </template>
@@ -107,6 +107,7 @@ export default {
       loading: false,
       title: "",
       tableData: [{
+        id:1,
         ip:  "192.168.99.99",
         port:"portT",
         state:"stateT",
@@ -129,7 +130,7 @@ export default {
   },
   methods: {
     initialData() { // 获取所有Service
-      this.loading = true
+      // this.loading = true
       getHostServices(id=this.id).then((response) => { // 成功获取，更新表项
         this.tableData = response.data['data'].map(v => {
           v = Object.assign({}, v['fields'])
