@@ -52,8 +52,10 @@
                 if (response.data['code'] !== 0) {
                     throw response
                 }
-                for (item of response.data['data'].all_daily_counts){
-                    overall_data.push(item)
+                let tempData=response.data['data'].attack_type_counts
+                for (key in tempData){
+                    // 将属性名和属性值合并成一个新数组，并添加到结果数组中
+                    overall_data.push([key, ...tempData[key]]);
                 }
                 
             }).catch(response => {
@@ -70,7 +72,7 @@
                   },
                   //在这里进行axios数据请求就行
                   dataset: {
-                  source: overall_data
+                    source: overall_data
                   },
                   xAxis: { type: 'category' },
                   yAxis: { gridIndex: 0 },
@@ -101,11 +103,63 @@
                       emphasis: { focus: 'series' }
                   },
                   {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' }
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' }
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' }
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' }
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' }
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' },
+                      color:'#5C3317'
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' },
+                      color:'#8E2323'
+                  },
+                  {
+                      type: 'line',
+                      smooth: true,
+                      seriesLayoutBy: 'row',
+                      emphasis: { focus: 'series' },
+                      color:'#2F4F4F'
+                  },
+                  {
                       type: 'pie',
                       id: 'pie',
                       seriesLayoutBy: 'row',
                       radius: '30%',
                       center: ['50%', '25%'],
+                      color:['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc','#5C3317','#8E2323','#2F4F4F'],
                       emphasis: {
                       focus: 'self'
                       },
