@@ -2,6 +2,7 @@ import axios from "axios"
 
 export const IncidentResponsEventsURL = '/api/incident_response/events'
 export const IncidentResponsEventURL = '/api/incident_response/event'
+export const EmailURL = "/api/incident_response/email_setting"
 
 // 查询应急响应事件
 export function getIncidentResponsEvents(page=1, pageSize=10, finished=0) {
@@ -16,4 +17,9 @@ export function finishIncidentResponsEvent(id) {
     return axios.put(
         IncidentResponsEventURL + '?id=' + id.toString()
     )
+}
+
+//设置邮件发送地址
+export function uploadVulThreat(data){
+    return axios.post(EmailURL, data)
 }

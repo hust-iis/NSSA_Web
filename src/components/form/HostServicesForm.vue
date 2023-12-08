@@ -132,11 +132,7 @@ export default {
     initialData() { // 获取所有Service
       // this.loading = true
       getHostServices(id=this.id).then((response) => { // 成功获取，更新表项
-        this.tableData = response.data['data'].map(v => {
-          v = Object.assign({}, v['fields'])
-          v.edit = false // important
-          return v
-        });
+        this.tableData = response.data['data'].list
         this.loading = false
       }).catch((err) => {
         this.tableData = []

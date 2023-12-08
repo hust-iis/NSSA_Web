@@ -53,20 +53,6 @@
             <el-form :model="settingsForm" ref="settingsForm" label-width="120px" style="margin-right: 60px">
               <el-form-item label="邮件主题"><el-input v-model="settingsForm.subject" /></el-form-item>
               <el-form-item label="发件人显示"><el-input v-model="settingsForm.sender" /></el-form-item>
-              <el-form-item label="选择发送方式">
-                <el-col :span="11">
-                  <el-select v-model="settingsForm.way" prop="way" placeholder="请选择">
-                    <el-option label="立即发送" value="immediate"></el-option>
-                    <el-option label="分批发送" value="batch"></el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="2" class="text-center">
-                  <span class="text-gray-500">-</span>
-                </el-col>
-                <el-col :span="11">
-                  <el-time-picker v-model="settingsForm.sendingTime" placeholder="Pick a time" style="width: 100%" />
-                </el-col>
-              </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="settingsVisible = false">取 消</el-button>
@@ -89,6 +75,7 @@ import Notification from "@/components/form/Notification";
 import {
   getIncidentResponsEvents,
   finishIncidentResponsEvent,
+  uploadVulThreat
 } from "@/api/incident_response"
 export default {
   name: "IncidentResponse",
@@ -153,14 +140,24 @@ export default {
     // 保存邮箱地址
     saveEmailAddr() {
       this.email.isEdit = false;
-      console.log("此时应该给后端发送收件地址更改了！");
-      //api:
-      //uploadVulThreat(this.email.addrress)
-      const notification = {
+      let tempdata={
+        "email_recipient": this.email.addrress,
+        "email_subject": this.settingsForm.subject,
+        "email_addresser_name":this.settingsForm.sender
+      }
+      uploadSettings(tempdata).then((response) => { // 成功获取，更新表项
+        const notification = {
         title: "Success",
         description: "更改邮件地址成功！",
       };
       this.$refs.notification.success(notification); // success调用
+      }).catch((err) => {
+        this.tableData = []
+        this.$message.error('error: ' + err.data.msg)
+        this.loading = false
+      })
+     
+      
     },
     // 获取威胁事件
     getInfo() {
@@ -201,14 +198,23 @@ export default {
     },
     // 保存邮箱设置
     saveSettings() {
-      //api:
-      // uploadSettings(this.settingsForm)
-      const notification = {
-        title: "Success",
-        description: "邮件相关设置保存成功！",
-      };
-      this.settingsVisible = false;
-      this.$refs.notification.success(notification); // success调用
+      let tempdata={
+        "email_recipient": this.email.addrress,
+        "email_subject": this.settingsForm.subject,
+        "email_addresser_name":this.settingsForm.sender
+      }
+      uploadSettings(tempdata).then((response) => { // 成功获取，更新表项
+        const notification = {
+          title: "Success",
+          description: "邮件相关设置保存成功！",
+        };
+        this.settingsVisible = false;
+        this.$refs.notification.success(notification); // success调用
+      }).catch((err) => {
+        this.tableData = []
+        this.$message.error('error: ' + err.data.msg)
+        this.loading = false
+      })
     },
     gotoAbnormal() {
       // console.log("即将跳转"),
