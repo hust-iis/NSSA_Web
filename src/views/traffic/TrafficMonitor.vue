@@ -39,7 +39,9 @@ export default {
             let chart=myEcharts.init(document.getElementById("myEcharts"))
             var app = {};
             var option;
-
+            let step=2000;
+            let endT=Date.now();
+            let startT=Date.now()-step*9
             let now = new Date();
             let categories = [];
             let len = 10;
@@ -54,12 +56,12 @@ export default {
             }
             //这里写入请求数据
             let data = [];
-            getFlow().then(response => {
+            getFlow(startT,endT,step).then(response => {
                 if (response.data['code'] !== 0) {
                     throw response
                 }
-                for (item of response.data['data'].total_traffic){
-                    data.push(item.traffic)
+                for (item of response.data['data'].total_packets){
+                    data.push(item.packets)
                 }
             }).catch(response => {
                 this.$message.error('error: ' + response.data.msg)
@@ -155,11 +157,13 @@ export default {
                 let axisData = new Date().toLocaleTimeString().replace(/^\D*/, '');
                 //这里是新加入的数据，在这里进行axios请求就好了
                 data.shift();
-                getFlow().then(response => {
+                endT=Date.now()
+                startT=endT-step*9
+                getFlow(startT,endT,step).then(response => {
                     if (response.data['code'] !== 0) {
                         throw response
                     }
-                    data.push(response.data['data'].total_traffic[9].traffic)
+                    data.push(response.data['data'].total_packets[9].packets)
                 }).catch(response => {
                     this.$message.error('error: ' + response.data.msg)
                     this.loading = false
@@ -189,7 +193,7 @@ export default {
                     }
                     ]
                 });
-            }, 2100);
+            }, 2000);
 
             option && chart.setOption(option);
 

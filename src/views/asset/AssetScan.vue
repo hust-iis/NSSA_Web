@@ -172,17 +172,17 @@
       <el-dialog title="扫描任务配置" :visible.sync="riskFormVisible" >
         <el-form :model="riskForm" ref="riskForm"
                  :label-width="formLabelWidth" style="margin-right: 60px;" size="mini">
-          <el-form-item label="资产价值" prop="assetValue">
-            <el-input v-model="riskForm.assetValue" placeholder="请输入资产价值"></el-input>
+          <el-form-item label="资产价值" prop="asset_value">
+            <el-input v-model="riskForm.asset_value" placeholder="请输入资产价值"></el-input>
           </el-form-item>
-          <el-form-item label="威胁值" prop="threatValue">
-            <span>{{ riskForm.threatValue }}</span>
+          <el-form-item label="威胁值" prop="threat_value">
+            <span>{{ riskForm.threat_value }}</span>
           </el-form-item>
           <el-form-item label="脆弱值" >
-            <span>{{ riskForm.vulnerabilitylValue }}</span>
+            <span>{{ riskForm.vulnerability_value }}</span>
           </el-form-item>
-          <el-form-item label="风险值" prop="riskValue" size="large" style="color: orange;">
-            <span>{{ riskForm.riskValue }}</span>
+          <el-form-item label="风险值" prop="risk_value" size="large" style="color: orange;">
+            <span>{{ riskForm.risk_value }}</span>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -206,7 +206,8 @@ import {
   getScanHost,
   startScanHost,
   addSingleAsset,
-  getVulThreat
+  getVulThreat,
+  calRisk
 } from "@/api/scan";
 import { getUnit } from "@/api/unit";
 import { saveAs } from 'file-saver';
@@ -278,7 +279,7 @@ export default {
       assetFormVisible: false,
       riskFormVisible:false,
       assetAdding:false,
-      calR_ip:"",
+      calR_id:"",
       ScanTaskform: {
         netSeg: '',
         portRange: '',
@@ -304,10 +305,10 @@ export default {
       },
       // 这里是新添加的弹窗值
       riskForm:{
-        assetValue:'',
-        threatValue:1,
-        vulnerabilitylValue:2,
-        riskValue:100
+        asset_value:'',
+        threat_value:1,
+        vulnerability_value:2,
+        risk_value:100
       },
       formLabelWidth: '150px',
       searchContent: '',
@@ -483,29 +484,32 @@ export default {
         this.$message.error('error: ' + response.data.msg)
       })
     },
-    // 以下是我添加的
+    // 获取风险值，脆弱值
     showVt(index,row){
       this.riskFormVisible = true
-      getVulThreat(row.ip, this.assetValue).then(response=>{
+      getVulThreat(row.id).then(response=>{
         if(response.data['code']!==0){
           throw response
         }
-        this.calR_ip=row.ip
-        this.riskForm.threatValue=res.data['data'].total_threat_value
-        this.riskForm.vulnerabilitylValue=res.data['data'].Va
-        this.riskForm.riskValue=res.data['data'].R
+        this.calR_id=row.id
+        this.riskForm=res.data['data']
+        // this.riskForm.asset_value=res.data['data'].asset_value
+        // this.riskForm.threat_value=res.data['data'].threat_value
+        // this.riskForm.vulnerability_value=res.data['data'].vulnerability_value
+        // this.riskForm.risk_value=res.data['data'].risk_value
       })
     },
     calRiskValue(){
-      getVulThreat(this.calR_ip, this.assetValue).then(response=>{
+      calRisk(this.calR_id, this.riskForm.asset_value).then(response=>{
         if(response.data['code']!==0){
           throw response
         }
-        this.riskForm.riskValue=res.data['data'].R
+        this.riskForm.risk_value=res.data['data'].risk_value
+      }).catch(response => {
+        this.$message.error('error: ' + response.data.msg)
       })
       
     }
-    //我添加的部分结束
   }
 }
 </script>
