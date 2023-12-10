@@ -1,7 +1,7 @@
 import {axios} from "@/api/basic";
 //还差一个文件导入导出api
 export const OverallThreatURL = "/api/flowMonitor/threat"
-export const FlowURL="/api/fowMonitor/flow"
+export const FlowURL="/api/flowMonitor/flow"
 
 //获取流量数据
 export function getFlow(count=10){

@@ -1,6 +1,6 @@
 import {axios} from "@/api/basic";
 
-export const LineInfoURL = "/asset-management/productionline"
+export const LineInfoURL = "/api/asset-management/productionline"
 
 // 文件导入导出api还没有给出
 // export const LineFileURL = "/cmdb/LineFile"

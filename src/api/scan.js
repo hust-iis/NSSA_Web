@@ -10,16 +10,16 @@ import {axios} from "@/api/basic";
 export const HostFileURL = "/cmdb/HostFile"
 export const HostServiceFileURL = "/cmdb/HostServiceFile"
 //扫描
-export const ScanHostURL = "/asset-management/assetscan"
+export const ScanHostURL = "/api/asset-management/assetscan"
 
 //获取给定资产的服务信息
-export const HostServiceURL = "/asset-management/assetservice"
+export const HostServiceURL = "/api/asset-management/assetservice"
 
 //用于资产增删改查
-export const AssetInfoURL="/asset-management/asset"
+export const AssetInfoURL="/api/asset-management/asset"
 
 //获取风险值api
-export const AnalysisURL="/risk/analysis"
+export const AnalysisURL="/api/risk/analysis"
 
 export function startScanHost(data) {
     data = {
