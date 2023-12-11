@@ -10,6 +10,7 @@
               </template>
               <el-menu-item index="/traffic_monitor/monitor">流量变化图</el-menu-item>
               <el-menu-item index="/traffic_monitor/overall">总体威胁事件</el-menu-item>
+              <el-menu-item index="/traffic_monitor/situation">大数据态势分析</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-col>

@@ -81,6 +81,7 @@ const routes = [
     children: [
       {path: 'monitor', component: () => import('../views/traffic/TrafficMonitor')},
       {path: 'overall', component: () => import('../views/traffic/OverallThreat')},
+      {path: 'situation', component: () => import('../views/Situation')},
     ]
   },
   // 应急响应

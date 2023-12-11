@@ -41,6 +41,7 @@
       </div>
       <div class="group">
         <main-menu-item to="/traffic_monitor" picture="item-asset-scan.png">流量检测</main-menu-item>
+        <main-menu-item to="/traffic_monitor/situation" picture="item-asset-scan.png">大数据态势分析</main-menu-item>
       </div>
       <!-- 大数据态势感知 -->
       <div class="title">
@@ -49,7 +50,7 @@
         <p class="title-text">流量检测</p>
       </div>
       <div class="group">
-        <main-menu-item to="/situation" picture="item-asset-scan.png">大数据态势分析</main-menu-item>
+        <!-- <main-menu-item to="/situation" picture="item-asset-scan.png">大数据态势分析</main-menu-item> -->
         <main-menu-item to="/incident" picture="item-asset-scan.png">态势应急响应</main-menu-item>
       </div>
     </div>
