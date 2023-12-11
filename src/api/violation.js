@@ -1,15 +1,13 @@
 import {axios} from "@/api/basic";
 
-export const ChangeModeURL = "/change-mode"
-export const SearchUsrURL = "/find-usr"
-export const SearchLogURL = "/find-log"
-export const DeleteUsrURL = "/delete-usr"
+export const ChangeModeURL = "/violation/change-mode"
+export const SearchUsrURL =  "/violation/find-usr"
+export const SearchLogURL =  "/violation/find-log"
+export const DeleteUsrURL =  "/violation/delete-usr"
 
 //改变检测模式
 export function changeMode(status){
-    return axios.post(ChangeModeURL, status, {
-        timeout: 45 * 60 * 1000,
-    })
+    return axios.post(ChangeModeURL, {params:{status:status}})
 }
 
 //查找白名单

@@ -10,24 +10,21 @@ import {axios} from "@/api/basic";
 export const HostFileURL = "/cmdb/HostFile"
 export const HostServiceFileURL = "/cmdb/HostServiceFile"
 //扫描
-export const ScanHostURL = "/api/asset-management/assetscan"
+export const ScanHostURL = "/api/asset-management/assetscan/"
 
 //获取给定资产的服务信息
-export const HostServiceURL = "/api/asset-management/assetservice"
+export const HostServiceURL = "/api/asset-management/assetservice/"
 
 //用于资产增删改查
-export const AssetInfoURL="/api/asset-management/asset"
+export const AssetInfoURL="/api/asset-management/asset/"
 
 //获取风险值api
-export const AnalysisURL="/api/risk/analysis"
+export const AnalysisURL="/api/risk_analysis/risk"
 //重新计算风险值
-export const ReCalRiskURL="/api/risk/cal"
+export const ReCalRiskURL="/api/risk_analysis/cal"
 
 export function startScanHost(data) {
-    data = {
-        data: data,
-        type: 'scan'
-    }
+
     return axios.post(ScanHostURL, data, {
         timeout: 45 * 60 * 1000,
     })
@@ -39,20 +36,14 @@ export function getScanHost(page=1,pageSize=10,search=''){
 
 // 添加一个资产
 export function addSingleAsset(data) {
-    data = {
-        data: data,
-        type: 'add'
-    }
+
     return axios.post(AssetInfoURL, data)
 }
 
 //新增服务
 export function addSingleService(ip,data) {
     data.ip=ip
-    data = {
-        data: data,
-        type: 'add'
-    }
+ 
     return axios.post(HostServiceURL, data)
 }
 
@@ -124,7 +115,7 @@ export function getVulThreat(id){
 }
 
 export function calRisk(id,value){
-    data={
+    let data={
         asset_id:id,
         asset_value:value
     }

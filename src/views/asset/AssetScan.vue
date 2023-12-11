@@ -48,11 +48,12 @@
           <el-table-column prop="mac" label="MAC地址"></el-table-column>
           <el-table-column prop="update_time" label="更新时间"></el-table-column>
           <el-table-column prop="productionline_name" label="产线名称"></el-table-column>
+          <el-table-column prop="asset_value" label="资产价值"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button-group>
                 <el-button type="primary" size="small" @click="showAssetForm(scope.$index, scope.row)">编辑</el-button>
-                <el-button type="primary" size="small" @click="showServiceForm(scope.$index)">服务</el-button>
+                <el-button type="primary" size="small" @click="showServiceForm(scope.$index), scope.row">服务</el-button>
                 <el-popconfirm icon="el-icon-info" icon-color="red" title="确定删除该项吗？" style="margin-left: 10px;"
                                @confirm="deleteRow(scope.$index, scope.row)">
                   <el-button slot="reference" type="danger" size="small">删除</el-button>
@@ -154,6 +155,9 @@
           <el-form-item label="产线id" >
             <el-input v-model="assetFormEdit.productionline_id"></el-input>
           </el-form-item>
+          <el-form-item label="资产价值" >
+            <el-input v-model="assetFormEdit.asset_value"></el-input>
+          </el-form-item>
           <!-- <el-form-item label="所属单位" >
             <el-select v-model="assetFormEdit.department_name">
               <el-option v-for="(unit) in unitList" :key="unit.name"
@@ -207,7 +211,8 @@ import {
   startScanHost,
   addSingleAsset,
   getVulThreat,
-  calRisk
+  calRisk,
+  getHostServices
 } from "@/api/scan";
 import { getUnit } from "@/api/unit";
 import { saveAs } from 'file-saver';
@@ -269,7 +274,7 @@ export default {
       pagesize: 10,
       unitList: [],
       serviceTableIP: "",
-      serviceTableID: "",
+      serviceTableID: 0,
       loading: false,
       dialogFormVisible: false,
       serviceTableVisible: false,
@@ -279,7 +284,7 @@ export default {
       assetFormVisible: false,
       riskFormVisible:false,
       assetAdding:false,
-      calR_id:"",
+      calR_id:0,
       ScanTaskform: {
         netSeg: '',
         portRange: '',
@@ -445,12 +450,12 @@ export default {
       this.currentPage = currentPage
       this.flushHost()  //点击第几页
     },
-    showServiceForm(index) { // 点击IP后显示"该IP下的所有服务"弹窗
+    showServiceForm(index,row) { // 点击IP后显示"该IP下的所有服务"弹窗
       this.serviceTableVisible = true
       if(this.serviceTableIP === this.tableData[index].ip) // IP相同时，强制重载
         this.$refs.serviceTable.initialData()
       this.serviceTableIP = this.tableData[index].ip
-      this.serviceTableID=index
+      this.serviceTableID=row.id
     },
     showAssetForm(index, row) {
       this.assetAdding=false
@@ -487,12 +492,16 @@ export default {
     // 获取风险值，脆弱值
     showVt(index,row){
       this.riskFormVisible = true
+      console.log(row.id)
       getVulThreat(row.id).then(response=>{
+        console.log(response.data['data'])
+        this.calR_id=row.id
+        this.riskForm=response.data['data']
+        console.log(riskForm)
         if(response.data['code']!==0){
           throw response
         }
-        this.calR_id=row.id
-        this.riskForm=res.data['data']
+        
         // this.riskForm.asset_value=res.data['data'].asset_value
         // this.riskForm.threat_value=res.data['data'].threat_value
         // this.riskForm.vulnerability_value=res.data['data'].vulnerability_value
@@ -504,7 +513,7 @@ export default {
         if(response.data['code']!==0){
           throw response
         }
-        this.riskForm.risk_value=res.data['data'].risk_value
+        this.riskForm.risk_value=response.data['data'].risk_value
       }).catch(response => {
         this.$message.error('error: ' + response.data.msg)
       })

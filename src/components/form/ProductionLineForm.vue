@@ -19,7 +19,7 @@
   
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="产线id">
+            <el-form-item label="车间id">
               <el-input type="text" v-model="line.workshop_id" placeholder="请输入产线id"></el-input>
             </el-form-item>
           </el-col>
@@ -299,6 +299,7 @@
     methods: {
       submit(){
         if (this.type === "addLine") {
+          console.log('111')
           addLine(this.line).then(response => {
             this.$message.success("添加成功");
             this.$emit('success')

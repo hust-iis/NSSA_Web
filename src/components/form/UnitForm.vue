@@ -20,7 +20,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="产线号码">
-            <el-input type="text" v-model="unit.production_number" placeholder="请输入所在产线号码"></el-input>
+            <el-input type="text" v-model="unit.productionline_number" placeholder="请输入所在产线号码"></el-input>
           </el-form-item>
         </el-col>
       </el-row>

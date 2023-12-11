@@ -131,7 +131,8 @@ export default {
   methods: {
     initialData() { // 获取所有Service
       // this.loading = true
-      getHostServices(id=this.id).then((response) => { // 成功获取，更新表项
+      getHostServices(1,99,this.asset_id).then((response) => { // 成功获取，更新表项
+        console.log('11')
         this.tableData = response.data['data'].list
         this.loading = false
       }).catch((err) => {
@@ -183,7 +184,17 @@ export default {
         }else{
           this.tableData[row].update_time=new Date();
           this.tableData[row].asset_id=this.asset_id
-          addSingleService(this.ip, this.tableData[row]).then(response => {
+          let tempData={
+            id:this.asset_id,
+            ip:  this.tableData[row].ip,
+            port:this.tableData[row].port,
+            state:this.tableData[row].state,
+            name:this.tableData[row].name,
+            product:this.tableData[row].product,
+            version:this.tableData[row].version,
+            cpe:this.tableData[row].cpe,
+          }
+          addSingleService(this.ip, tempData).then(response => {
             this.$message.success('添加成功')
             this.initialData()
           }).catch(err => {

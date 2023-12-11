@@ -12,28 +12,28 @@
       <!-- 基本信息 -->
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="type" label="事件类型" :filters="[
-        { text: 'DDoS', value: 1 },
-        { text: 'Webshell', value: 2 },
-        { text: '僵尸网络', value: 3 },
-        { text: '木马', value: 4 },
-        { text: '蠕虫', value: 5 },
-        { text: '病毒', value: 6 },
-        { text: 'SQL注入', value: 7 },
-        { text: 'XML注入', value: 8 },
-        { text: '跨站脚本攻击', value: 9 },
-        { text: '端口扫描', value: 10 },]" :filter-method="filterHandler">
+        { text: 'DDoS', value: 0 },
+        { text: 'Webshell', value: 1 },
+        { text: '僵尸网络', value: 2 },
+        { text: '木马', value: 3 },
+        { text: '蠕虫', value: 4 },
+        { text: '病毒', value: 5 },
+        { text: 'SQL注入', value: 6 },
+        { text: 'XML注入', value: 7 },
+        { text: '跨站脚本攻击', value: 8 },
+        { text: '端口扫描', value: 9 },]" :filter-method="filterHandler">
         <template slot-scope="scope">
-          <span v-if="scope.row.type == 1">DDoS</span>
-          <span v-if="scope.row.type == 2">Webshell</span>
-          <span v-if="scope.row.type == 3">僵尸网络</span>
-          <span v-if="scope.row.type == 4">木马</span>
-          <span v-if="scope.row.type == 5">蠕虫</span>
-          <span v-if="scope.row.type == 6">病毒</span>
-          <span v-if="scope.row.type == 7">SQL注入</span>
-          <span v-if="scope.row.type == 8">XML注入</span>
-          <span v-if="scope.row.type == 9">跨站脚本攻击</span>
-          <span v-if="scope.row.type == 10">端口扫描</span>
-          <span v-if="scope.row.type == 11">0day/apt</span>
+          <span v-if="scope.row.type == 0">DDoS</span>
+          <span v-if="scope.row.type == 1">Webshell</span>
+          <span v-if="scope.row.type == 2">僵尸网络</span>
+          <span v-if="scope.row.type == 3">木马</span>
+          <span v-if="scope.row.type == 4">蠕虫</span>
+          <span v-if="scope.row.type == 5">病毒</span>
+          <span v-if="scope.row.type == 6">SQL注入</span>
+          <span v-if="scope.row.type == 7">XML注入</span>
+          <span v-if="scope.row.type == 8">跨站脚本攻击</span>
+          <span v-if="scope.row.type == 9">端口扫描</span>
+          <span v-if="scope.row.type == 10">0day/apt</span>
         </template>
       </el-table-column>
       <el-table-column prop="time" label="发生时间"></el-table-column>
@@ -73,6 +73,7 @@
 import {
   getTraffics,
   delTraffic,
+  delTraffics,
 } from "@/api/abnormal_attack";
 
 export default {
@@ -137,7 +138,7 @@ export default {
         this.multipleSelection.forEach(row => {
           list.push(row.id)
         });
-        delTraffics(list.toString()).
+        delTraffic(list.toString()).
           then(response => {
             if (response.data['code'] !== 0) {
               throw response

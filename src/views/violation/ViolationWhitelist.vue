@@ -65,7 +65,7 @@
       };
     },
     mounted() {
-      this.flushWhileList()
+      this.flushWhiteList()
     },
     methods: {
       // API 相关
@@ -75,7 +75,7 @@
           if (response.data['code'] !== 0) {
             throw response
           }
-          this.tableData = response.data['data'].map(v => v['list']);
+          this.tableData = response.data['data'].list;
           this.tableTotal = response.data['total']
           this.loading = false
         }).catch(response => {

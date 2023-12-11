@@ -26,8 +26,7 @@
           <el-table-column prop="id" label="ID" width="200" fixed></el-table-column>
           <el-table-column prop="name" label="产线名称"></el-table-column>
           <el-table-column prop="shortened" label="产线简称"></el-table-column>
-          <el-table-column prop="asset_num" label="产线简称"></el-table-column>
-          <el-table-column prop="workshop_n" label="产线id"></el-table-column>
+          <el-table-column prop="workshop_id" label="车间id"></el-table-column>
           <el-table-column prop="asset_number" label="资产数量"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
