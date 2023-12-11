@@ -53,7 +53,7 @@
             <template slot-scope="scope">
               <el-button-group>
                 <el-button type="primary" size="small" @click="showAssetForm(scope.$index, scope.row)">编辑</el-button>
-                <el-button type="primary" size="small" @click="showServiceForm(scope.$index), scope.row">服务</el-button>
+                <el-button type="primary" size="small" @click="showServiceForm(scope.$index, scope.row)">服务</el-button>
                 <el-popconfirm icon="el-icon-info" icon-color="red" title="确定删除该项吗？" style="margin-left: 10px;"
                                @confirm="deleteRow(scope.$index, scope.row)">
                   <el-button slot="reference" type="danger" size="small">删除</el-button>
@@ -102,7 +102,7 @@
       </el-dialog>
       <!--Service展示\编辑弹窗-->
       <el-dialog :title="serviceTableIP + '的服务列表'" :visible.sync="serviceTableVisible" width="80vw">
-        <host-services-form :ip="serviceTableIP" :asset_id="serviceTableID" ref="serviceTable"></host-services-form>
+        <host-services-form :ip="serviceTableIP" :asset-id="serviceTableID" ref="serviceTable"></host-services-form>
       </el-dialog>
       <!-- 生成拓扑图弹窗 -->
       <el-dialog title="拓扑图生成" :visible.sync="topoGenVisible" width="50vw">
@@ -211,8 +211,7 @@ import {
   startScanHost,
   addSingleAsset,
   getVulThreat,
-  calRisk,
-  getHostServices
+  calRisk
 } from "@/api/scan";
 import { getUnit } from "@/api/unit";
 import { saveAs } from 'file-saver';

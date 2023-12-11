@@ -96,10 +96,9 @@ export default {
       type: String,
       default: ""
     },
-    asset_id:{
+    assetId:{
       type:Number,
-      default:""
-
+      default: 0
     }
   },
   data() {
@@ -130,9 +129,8 @@ export default {
   },
   methods: {
     initialData() { // 获取所有Service
-      // this.loading = true
-      getHostServices(1,99,this.asset_id).then((response) => { // 成功获取，更新表项
-        console.log('11')
+      this.loading = true
+      getHostServices(1,99,this.assetId).then((response) => { // 成功获取，更新表项
         this.tableData = response.data['data'].list
         this.loading = false
       }).catch((err) => {
@@ -183,9 +181,9 @@ export default {
           })
         }else{
           this.tableData[row].update_time=new Date();
-          this.tableData[row].asset_id=this.asset_id
+          this.tableData[row].assetId=this.assetId
           let tempData={
-            id:this.asset_id,
+            id:this.assetId,
             ip:  this.tableData[row].ip,
             port:this.tableData[row].port,
             state:this.tableData[row].state,

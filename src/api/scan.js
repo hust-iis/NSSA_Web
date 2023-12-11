@@ -59,8 +59,8 @@ export function deleteSingleHost(num) {
     return axios.delete(AssetInfoURL+`/?deletenum=${num}`)
 }
 
-export function getHostServices(page=1,pageSize=99,id) {
-    return axios.get(HostServiceURL, {params: {page: page, pageSize: pageSize,assetid: id}})
+export function getHostServices(page,pageSize,id,content = '') {
+    return axios.get(HostServiceURL, {params: {page: page, pageSize: pageSize,assetid: id,content}})
 }
 
 export function changeSingleHostService(id, data) {
