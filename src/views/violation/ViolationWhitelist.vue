@@ -76,7 +76,7 @@
             throw response
           }
           this.tableData = response.data['data'].list;
-          this.tableTotal = response.data['total']
+          this.tableTotal = response.data['data']['total']
           this.loading = false
         }).catch(response => {
           this.$message.error('error: ' + response.data.msg)
@@ -103,7 +103,7 @@
             throw response
           }
           this.$message({type: 'success', message: '删除成功!'})
-          this.flushLine()
+          this.flushWhiteList()
         }).catch(response => {
           this.$message.error('error: ' + response.data.msg)
         })
@@ -111,7 +111,6 @@
     },
     watch:{
         mode:{
-            immediate:true,
             handler(newMode,oldMode){
                 var status=(newMode===true?1:0)
                 changeMode(status)

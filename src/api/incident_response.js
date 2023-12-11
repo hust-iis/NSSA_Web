@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const IncidentResponsEventsURL = '/api/incident_response/events'
-export const IncidentResponsEventURL = '/api/incident_response/event'
+export const IncidentResponsEventsURL = '/api/incident_response/warnings'
+export const IncidentResponsEventURL = '/api/incident_response/warning'
 export const EmailURL = "/api/incident_response/email_setting"
 
 // 查询应急响应事件

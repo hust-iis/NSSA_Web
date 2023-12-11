@@ -6,6 +6,7 @@
 
             <el-main style="overflow: hidden;">
                 <div id="myEcharts" style="width:1000px; height:500px"></div>
+                
                 <!-- <el-row>
             <span>总体威胁事件</span>
             <el-button @click="getNewestInfo">获取最新数据</el-button>
@@ -26,7 +27,9 @@ export default {
     data() {
         return {
             interval: 0,
-            myEcharts: null
+            interval2: 0,
+            myEcharts: null,
+            myEcharts2:null,
         }
     },
     methods: {
@@ -201,7 +204,8 @@ export default {
 
             option && chart.setOption(option);
             this.myEcharts = chart;
-        }
+        },
+        
     },
     mounted() {
         this.initChart();
@@ -210,6 +214,7 @@ export default {
         console.log('unmount: ', this.interval)
         this.myEcharts.dispose();
         clearInterval(this.interval);
+        
     },
 }
 </script>

@@ -89,6 +89,12 @@ const routes = [
     name: "IncidentResponse",
     component: () => import('../views/IncidentResponse'),
   },
+  // 大数据态势分析
+  {
+    path: "/situation",
+    name: "Situation",
+    component: () => import('../views/Situation')
+  },
   // TODO: 密码应用+密码知识库
   {
     path: '/crypto',

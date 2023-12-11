@@ -91,31 +91,31 @@ export default {
       pageSize: 10,
       tableTotal: 0,
       threats: [
-        {
-          id: 1,
-          title: "威胁1",
-          content: "alksfhkladsfhlkajsdfhlajkshdf asdf"
-        },
-        {
-          id: 2,
-          title: "威胁2",
-          content: "拉克丝的废话啦扣税的风流啊是的法律"
-        },
-        {
-          id: 3,
-          title: "威胁3",
-          content: "偶闻夫人很难看阿萨的本能和顾客垃圾啊韩国部署多个开来看过"
-        },
-        {
-          id: 4,
-          title: "威胁4",
-          content: "圣诞节快乐发给胡昆仑山地方和概括来讲是"
-        },
-        {
-          id: 5,
-          title: "威胁5",
-          content: "节快乐的方式婢女架空历史的包袱鬼哭狼嚎"
-        }
+        // {
+        //   id: 1,
+        //   title: "威胁1",
+        //   content: "alksfhkladsfhlkajsdfhlajkshdf asdf"
+        // },
+        // {
+        //   id: 2,
+        //   title: "威胁2",
+        //   content: "拉克丝的废话啦扣税的风流啊是的法律"
+        // },
+        // {
+        //   id: 3,
+        //   title: "威胁3",
+        //   content: "偶闻夫人很难看阿萨的本能和顾客垃圾啊韩国部署多个开来看过"
+        // },
+        // {
+        //   id: 4,
+        //   title: "威胁4",
+        //   content: "圣诞节快乐发给胡昆仑山地方和概括来讲是"
+        // },
+        // {
+        //   id: 5,
+        //   title: "威胁5",
+        //   content: "节快乐的方式婢女架空历史的包袱鬼哭狼嚎"
+        // }
       ],
       // 邮箱设置
       email: {
@@ -163,20 +163,13 @@ export default {
     getInfo() {
       getIncidentResponsEvents(this.currentPage, this.pageSize, 0)
         .then((response) => {
-          var tempList = []
-          response.data["data"]['events'].map((item) => {
-            // 将item解析并push到list中
-            tempList.push({
-              id: item["id"],
-              type: item["type"],
-              time: item["time"],
-              finished: item["finished"],
-              content: JSON.parse(item["content"])
-            })
-          })
-          this.threats = tempList
+          this.threats = response.data["data"]['warning'].map((item) => ({
+            ...item,
+            content: JSON.parse(item["detail"])
+          }))
           this.tableTotal = response.data["data"]['count']
         }).catch((response) => {
+          console.log(response)
           this.$message.error(response.data.msg);
         }).finally()
     },

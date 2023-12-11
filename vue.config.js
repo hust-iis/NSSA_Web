@@ -3,6 +3,11 @@ const webpack = require("webpack");
 module.exports = {
     devServer: {
         proxy: {
+            '/api/violation': {
+                target: 'http://172.16.44.141:3318/',
+                secure: false, // false为http访问，true为https访问
+                changeOrigin: true, // 跨域访问设置，true代表跨域
+            },
             '/api':{
                 target: 'http://172.16.44.141:3317/',
                 secure: false, // false为http访问，true为https访问

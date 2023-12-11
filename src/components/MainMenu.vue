@@ -49,7 +49,7 @@
         <p class="title-text">流量检测</p>
       </div>
       <div class="group">
-        <main-menu-item to="/asset/scan" picture="item-asset-scan.png">大数据态势分析</main-menu-item>
+        <main-menu-item to="/situation" picture="item-asset-scan.png">大数据态势分析</main-menu-item>
         <main-menu-item to="/incident" picture="item-asset-scan.png">态势应急响应</main-menu-item>
       </div>
     </div>
