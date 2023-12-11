@@ -6,9 +6,8 @@ import {axios} from "@/api/basic";
 // export const ScanHostURL = "/cmdb/hostapi"
 // export const HostServiceURL = "/cmdb/HostServices"
 
-//还差一个文件导入导出api
-export const HostFileURL = "/cmdb/HostFile"
-export const HostServiceFileURL = "/cmdb/HostServiceFile"
+//文件导入导出
+export const HostFileURL = "/api/asset-management/assetfile/"
 //扫描
 export const ScanHostURL = "/api/asset-management/assetscan/"
 
@@ -88,25 +87,25 @@ export function downloadHostFile() {
     })
 }
 
-export function importHostServiceFile(file) {
-    const formData = new FormData();
-	formData.append('file', file.raw);
-    return axios.post(HostServiceFileURL, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        transformRequest: data => data
-    })
-}
+// export function importHostServiceFile(file) {
+//     const formData = new FormData();
+// 	formData.append('file', file.raw);
+//     return axios.post(HostServiceFileURL, formData, {
+//         headers: {
+//             'Content-Type': 'multipart/form-data'
+//         },
+//         transformRequest: data => data
+//     })
+// }
 
-export function downloadHostServiceFile(ip) {
-    return axios.get(HostServiceFileURL, {
-        params: {
-            ip
-        },
-        responseType: 'blob'
-    })
-}
+// export function downloadHostServiceFile(ip) {
+//     return axios.get(HostServiceFileURL, {
+//         params: {
+//             ip
+//         },
+//         responseType: 'blob'
+//     })
+// }
 
 export function getVulThreat(id){
     //获取脆弱值、风险值等相关数据

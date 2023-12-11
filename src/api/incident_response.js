@@ -20,6 +20,6 @@ export function finishIncidentResponsEvent(id) {
 }
 
 //设置邮件发送地址
-export function uploadVulThreat(data){
+export function uploadSettings(data) {
     return axios.post(EmailURL, data)
 }

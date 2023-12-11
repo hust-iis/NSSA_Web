@@ -57,7 +57,7 @@ import ClassifySideBar from "@/components/common/ClassifySideBar";
 import {
   getUnit,
   importUnitFile,
-  downloadUnitFile,
+  UnitFileURL,
   deleteSingleUnit,
 } from "@/api/unit";
 import UnitForm from "@/components/form/UnitForm";
@@ -110,29 +110,25 @@ export default {
         return false
       this.loading = true
       importUnitFile(file).then(res=>{
-        this.handleUploadSuccess(res.data, file, fileList)
+        this.handleUploadSuccess(res.data, file)
       }).catch(res=>{
-        this.handleUploadError(res.data, file, fileList)
+        this.handleUploadError(res.data, file)
       })
     },
-    handleUploadSuccess(res, file, fileList) { // 上传文件成功
+    handleUploadSuccess(res, file) { // 上传文件成功
       if(res.code === 0) {
         this.$message.success('导入成功')
         this.flushUnit()
       } else {
-        this.handleUploadError(res, file, fileList)
+        this.handleUploadError(res, file)
       }
     },
-    handleUploadError(error, file, fileList) { // 上传文件失败
+    handleUploadError(error, file) { // 上传文件失败
       this.$message.error('导入失败'+error.msg)
       this.loading = false
     },
     handleDownload() { // 导出
-      downloadUnitFile().then(res=>{
-        saveAs(res.data, 'units.xls')
-      }).catch(response => {
-        this.$message.error('error: ' + response.data.msg)
-      })
+      saveAs(UnitFileURL, 'units.xls')
     },
     handleAdd() { // 添"车间
       this.formType = "addUnit"; // 标识添"车间

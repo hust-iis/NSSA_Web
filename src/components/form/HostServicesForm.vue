@@ -81,7 +81,7 @@
 import {
   changeSingleHostService,
   deleteSingleService,
-  importHostServiceFile,
+  // importHostServiceFile,
   downloadHostServiceFile,
   getHostServices,
   addSingleService
@@ -139,16 +139,16 @@ export default {
         this.loading = false
       })
     },
-    beforeFileUpload(file, fileList) {
-      if(this.loading)
-        return false
-      this.loading = true
-      importHostServiceFile(file).then(res=>{
-        this.handleUploadSuccess(res.data, file, fileList)
-      }).catch(res=>{
-        this.handleUploadError(res.data, file, fileList)
-      })
-    },
+    // beforeFileUpload(file, fileList) {
+    //   if(this.loading)
+    //     return false
+    //   this.loading = true
+    //   importHostServiceFile(file).then(res=>{
+    //     this.handleUploadSuccess(res.data, file, fileList)
+    //   }).catch(res=>{
+    //     this.handleUploadError(res.data, file, fileList)
+    //   })
+    // },
     handleUploadSuccess(res, file, fileList) { // 上传文件成功
       if(res.code === 0) {
         this.$message.success('导入成功')
@@ -161,13 +161,13 @@ export default {
       this.$message.error('导入失败'+error.msg)
       this.loading = false
     },
-    handleDownload() { // 导出
-      downloadHostServiceFile(this.ip).then(res=>{
-        saveAs(res.data, 'services.xls')
-      }).catch(response => {
-        this.$message.error('error: ' + response.data.msg)
-      })
-    },
+    // handleDownload() { // 导出
+    //   downloadHostServiceFile(this.ip).then(res=>{
+    //     saveAs(res.data, 'services.xls')
+    //   }).catch(response => {
+    //     this.$message.error('error: ' + response.data.msg)
+    //   })
+    // },
     handleEdit(row) { // Service 编辑提交
       if(this.tableData[row].edit) {
         this.loading = true

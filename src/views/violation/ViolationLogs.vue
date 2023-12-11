@@ -6,7 +6,7 @@
           <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
         </el-input>
 
-        <el-switch v-model="mode" style="float: right; margin-right:30px"
+        <el-switch v-model="mode" @change="handleChangeMode" style="float: right; margin-right:30px"
             active-text="拦截模式" inactive-text="学习模式">
         </el-switch>
       </div>
@@ -59,15 +59,15 @@
     
     methods: {
       // API 相关
-      flushLogs() { // 刷新所有Line
-        // this.loading = true
-        
+      flushLogs() { // 刷新
+        this.loading = true
         searchLogs(this.currentPage, this.pagesize, this.searchContent).then(response => {
           if (response.data['code'] !== 0) {
             throw response
           }
           this.tableData = response.data['data'].list;
           this.tableTotal = response.data['data']['total']
+          this.mode = response.data['mode'] == 1
           this.loading = false
         }).catch(response => {
           this.$message.error('error: ' + response.data.msg)
@@ -88,19 +88,21 @@
         this.currentPage = currentPage
         this.flushLogs()  //点击第几页
       },
-
+      handleChangeMode(val) {
+        var status=(val===true?1:0)
+        changeMode(status).then(response => {
+          if (response.data['code'] !== 0) {
+            throw response
+          }
+          this.$message.success('切换成功')
+        }).catch(response => {
+          this.$message.error('error: ' + response.data.msg)
+        })
+      }
     },
     mounted() {
       this.flushLogs()
     },
-    watch:{
-        mode:{
-            handler(newMode,oldMode){
-                var status=(newMode===true?1:0)
-                changeMode(status)
-            }
-        }
-    }
   };
   </script>
   
