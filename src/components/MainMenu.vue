@@ -47,7 +47,7 @@
       <div class="title">
         <span class="title-front" style="border: 1px solid red">&nbsp;</span>
         <img class="title-icon" style="width: 24px; height: 24px" src="@/assets/img/home/title-resource.png" alt="">
-        <p class="title-text">流量检测</p>
+        <p class="title-text">应急响应</p>
       </div>
       <div class="group">
         <!-- <main-menu-item to="/situation" picture="item-asset-scan.png">大数据态势分析</main-menu-item> -->
