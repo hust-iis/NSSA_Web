@@ -46,7 +46,8 @@
           </el-card>
           
           <!-- 底部的【查看更多】按钮 -->
-          <el-button @click="gotoAbnormal" style="margin-top: 20px;">查看更多异常详情</el-button>
+          <el-button @click="gotoMonitor" style="margin-top: 20px;">总体变化</el-button>
+          <el-button @click="gotoAbnormal" style="margin-top: 20px;">更多详情</el-button>
           
           <!-- 邮件设置弹窗 -->
           <el-dialog title="邮件告警设置" :visible.sync="settingsVisible">
@@ -75,7 +76,7 @@ import Notification from "@/components/form/Notification";
 import {
   getIncidentResponsEvents,
   finishIncidentResponsEvent,
-  uploadVulThreat
+  uploadSettings,
 } from "@/api/incident_response"
 export default {
   name: "IncidentResponse",
@@ -90,33 +91,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       tableTotal: 0,
-      threats: [
-        // {
-        //   id: 1,
-        //   title: "威胁1",
-        //   content: "alksfhkladsfhlkajsdfhlajkshdf asdf"
-        // },
-        // {
-        //   id: 2,
-        //   title: "威胁2",
-        //   content: "拉克丝的废话啦扣税的风流啊是的法律"
-        // },
-        // {
-        //   id: 3,
-        //   title: "威胁3",
-        //   content: "偶闻夫人很难看阿萨的本能和顾客垃圾啊韩国部署多个开来看过"
-        // },
-        // {
-        //   id: 4,
-        //   title: "威胁4",
-        //   content: "圣诞节快乐发给胡昆仑山地方和概括来讲是"
-        // },
-        // {
-        //   id: 5,
-        //   title: "威胁5",
-        //   content: "节快乐的方式婢女架空历史的包袱鬼哭狼嚎"
-        // }
-      ],
+      threats: [],
       // 邮箱设置
       email: {
         addrress: "295664857@qq.com",
@@ -143,7 +118,7 @@ export default {
       let tempdata={
         "email_recipient": this.email.addrress,
         "email_subject": this.settingsForm.subject,
-        "email_addresser_name":this.settingsForm.sender
+        "email_addresser_name": this.settingsForm.sender
       }
       uploadSettings(tempdata).then((response) => { // 成功获取，更新表项
         const notification = {
@@ -194,7 +169,7 @@ export default {
       let tempdata={
         "email_recipient": this.email.addrress,
         "email_subject": this.settingsForm.subject,
-        "email_addresser_name":this.settingsForm.sender
+        "email_addresser_name": this.settingsForm.sender
       }
       uploadSettings(tempdata).then((response) => { // 成功获取，更新表项
         const notification = {
@@ -209,10 +184,13 @@ export default {
         this.loading = false
       })
     },
-    gotoAbnormal() {
+    gotoMonitor() {
       // console.log("即将跳转"),
-      this.$router.push("/traffic_monitor/monitor")
+      this.$router.push("/traffic_monitor/overall")
     },
+    gotoAbnormal() {
+      this.$router.push("/abnormal_attack/traffic")
+    }
   },
   mounted() {
     this.getInfo();

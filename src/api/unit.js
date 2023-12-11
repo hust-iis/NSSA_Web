@@ -2,7 +2,7 @@ import {axios} from "@/api/basic";
 
 // export const UnitInfoURL = "/cmdb/Department"
 export const UnitInfoURL = "/api/asset-management/workshop/"
-// export const UnitFileURL = "/cmdb/DepartmentFile"
+export const UnitFileURL = "/api/asset-management/workshopfile/"
 
 // 查询所有车间
 export function getUnit(page = 1, pageSize = 10, search = '') {
