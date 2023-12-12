@@ -42,7 +42,6 @@ export function addSingleAsset(data) {
 //新增服务
 export function addSingleService(ip,data) {
     data.ip=ip
- 
     return axios.post(HostServiceURL, data)
 }
 
@@ -51,23 +50,26 @@ export function addSingleService(ip,data) {
 // }
 
 export function changeSingleHost(num,data) {
-    return axios.put(AssetInfoURL+`/?alternum=${num}`, data)
+    return axios.put(AssetInfoURL,data,{params:{alternum:num}})
 }
 
 export function deleteSingleHost(num) {
-    return axios.delete(AssetInfoURL+`/?deletenum=${num}`)
+    return axios.delete(AssetInfoURL,{params:{deletenum:num}})
 }
 
 export function getHostServices(page,pageSize,id,content = '') {
-    return axios.get(HostServiceURL, {params: {page: page, pageSize: pageSize,assetid: id,content}})
+    return axios.get(
+        HostServiceURL, 
+        {params: {page: page, pageSize: pageSize,assetid: id,content}}
+    )
 }
 
 export function changeSingleHostService(id, data) {
-    return axios.post(HostServiceURL+`/?alternum=${num}`, data)
+    return axios.post(HostServiceURL,data,{params:{alternum: num}})
 }
 
 export function deleteSingleService(num) {
-    return axios.delete(HostServiceURL+`/?deletenum=${num}`)
+    return axios.delete(HostServiceURL,{params: {deletenum: num}})
 }
 
 export function importHostFile(file) {

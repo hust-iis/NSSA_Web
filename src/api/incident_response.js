@@ -15,7 +15,7 @@ export function getIncidentResponsEvents(page=1, pageSize=10, finished=0) {
 // 设为已读
 export function finishIncidentResponsEvent(id) {
     return axios.put(
-        IncidentResponsEventURL + '?id=' + id.toString()
+        IncidentResponsEventURL,{},{params: {id: id}}
     )
 }
 
