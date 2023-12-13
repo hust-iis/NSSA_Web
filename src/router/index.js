@@ -58,7 +58,8 @@ const routes = [
     children: [
       {path: 'traffic', component: () => import('../views/attack/AbnormalTraffic')},
       {path: 'host', component: () => import('../views/attack/AbnormalHost')},
-      {path: 'user', component: () => import('../views/attack/AbnormalUser')}
+      {path: 'user', component: () => import('../views/attack/AbnormalUser')},
+      {path: 'events', component: () => import('../views/attack/SituationEvents')},
     ]
   },
   // 违规行为监测

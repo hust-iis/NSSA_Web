@@ -11,6 +11,7 @@
             <el-menu-item index="/abnormal_attack/traffic">异常流量感知</el-menu-item>
             <el-menu-item index="/abnormal_attack/user">异常用户监测</el-menu-item>
             <el-menu-item index="/abnormal_attack/host">异常主机监测</el-menu-item>
+            <el-menu-item index="/abnormal_attack/events">态势感知事件</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-col>

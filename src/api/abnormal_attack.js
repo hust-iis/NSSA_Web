@@ -36,20 +36,6 @@ export function delTraffic(id) {
         {params: {id: id}}
         )
 }
-// // 新增
-// export function addTraffic(traffic) {
-//     return axios.post(
-//         AbnormalTrafficsURL,
-//         traffic
-//         )
-// }
-// // 修改
-// export function editTraffic(traffic) {
-//     return axios.put(
-//         AbnormalTrafficURL,
-//         traffic
-//         )
-// }
 
 // 异常用户
 // 批量查询
@@ -110,3 +96,42 @@ export function delHost(id) {
         {params: {id: id}}
         )
 }
+
+
+
+// 以下是旧的态势感知页面
+
+export const SituationEventsURL = "/api/situation_events/list/"
+export const SituationEventItemURL = "/api/situation_events/item/"
+export const MaliciousFileCheckURL = "/detect_vtw/detect_vtw/"
+
+// 获取态势感知事件
+export function getSituationEvents(page, pageSize, keyword, beginTime, endTime) {
+	return axios.get(SituationEventsURL, {params: {
+		'page': page,
+		'pageSize': pageSize,
+		'keyword': keyword,
+		'beginTime': beginTime,
+		'endTime': endTime
+	}})
+}
+
+// 删除态势感知事件
+export function deleteSituationEventItems(ids) {
+	return axios.delete(SituationEventItemURL, {params: {
+		'id_list': ids
+	}})
+}
+
+
+// // 上传需要检测的文件
+// export function checkUploadFile(file){
+// 	const formData = new FormData();
+// 	formData.append('file', file.raw);
+// 	return axios.post(MaliciousFileCheckURL, formData, {
+// 		headers: {
+// 			'Content-Type': 'multipart/form-data'
+// 		},
+// 		transformRequest: data => data
+// 	});
+// }

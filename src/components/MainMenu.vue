@@ -22,6 +22,7 @@
         <main-menu-item to="/abnormal_attack/traffic" picture="item-asset-scan.png">异常流量感知</main-menu-item>
         <main-menu-item to="/abnormal_attack/user" picture="item-asset-scan.png">异常用户监测</main-menu-item>
         <main-menu-item to="/abnormal_attack/host" picture="item-asset-scan.png">异常主机监测</main-menu-item>
+        <main-menu-item to="/abnormal_attack/events" picture="item-asset-scan.png">态势感知事件</main-menu-item>
       </div>
       <!-- 违规行为检测 -->
       <div class="title">
