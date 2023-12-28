@@ -35,15 +35,15 @@
             </template>
           </el-table-column>
           <el-table-column prop="asset_name" label="主机名"></el-table-column>
-          <el-table-column prop="position" label="位置"></el-table-column>
+          <!-- <el-table-column prop="position" label="位置"></el-table-column> -->
           <el-table-column prop="device_sn" label="设备序列号"></el-table-column>
           <el-table-column prop="device_vendor" label="供应商"></el-table-column>
           <el-table-column prop="device_type" label="设备类型"></el-table-column>
-          <el-table-column prop="device_working_hours" label="工作时间"></el-table-column>
-          <el-table-column prop="cpu_used" label="cpu使用率"></el-table-column>
-          <el-table-column prop="remain_mem" label="剩余内存"></el-table-column>
-          <el-table-column prop="remain_harddisk" label="剩余硬盘大小主机名"></el-table-column>
-          <el-table-column prop="network_speed" label="网速"></el-table-column>
+          <!-- <el-table-column prop="device_working_hours" label="工作时间"></el-table-column> -->
+          <!-- <el-table-column prop="cpu_used" label="cpu使用率"></el-table-column> -->
+          <!-- <el-table-column prop="remain_mem" label="剩余内存"></el-table-column> -->
+          <!-- <el-table-column prop="remain_harddisk" label="剩余硬盘大小主机名"></el-table-column> -->
+          <!-- <el-table-column prop="network_speed" label="网速"></el-table-column> -->
           <el-table-column prop="os" label="操作系统"></el-table-column>
           <el-table-column prop="mac" label="MAC地址"></el-table-column>
           <el-table-column prop="update_time" label="更新时间"></el-table-column>
@@ -122,9 +122,9 @@
           <el-form-item label="主机名" >
             <el-input v-model="assetFormEdit.name"></el-input>
           </el-form-item>
-          <el-form-item label="位置" >
+          <!-- <el-form-item label="位置" >
             <el-input v-model="assetFormEdit.position"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="sn" >
             <el-input v-model="assetFormEdit.sn"></el-input>
           </el-form-item>
@@ -134,7 +134,7 @@
           <el-form-item label="设备类型" >
             <el-input v-model="assetFormEdit.type"></el-input>
           </el-form-item>
-          <el-form-item label="工作时常" >
+          <!-- <el-form-item label="工作时常" >
             <el-input v-model="assetFormEdit.working_hours"></el-input>
           </el-form-item>
           <el-form-item label="CPU使用率" >
@@ -145,7 +145,7 @@
           </el-form-item>
           <el-form-item label="网速" >
             <el-input v-model="assetFormEdit.network_speed"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="操作系统" >
             <el-input v-model="assetFormEdit.os"></el-input>
           </el-form-item>
